@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
 
-public class ControlStory2 implements IRiverCrossingController {
+public class ControlStory2 implements IRiverCrossingController, IControlStory2 {
 
 	private static ControlStory2 c2 = null;
 
@@ -35,16 +35,16 @@ public class ControlStory2 implements IRiverCrossingController {
 		this.cHerb = cHerb;
 	}
 
-	public void setCounter(int c, ICrosser f) {
-		if (f.equals(s2.getFarmer1()))
+	public void setCounter(int c, ICrosser crosser) {
+		if (crosser.equals(s2.getFarmer1()))
 			setcF1(c);
-		else if (f.equals(s2.getFarmer2()))
+		else if (crosser.equals(s2.getFarmer2()))
 			setcF2(c);
-		else if (f.equals(s2.getFarmer3()))
+		else if (crosser.equals(s2.getFarmer3()))
 			setcF3(c);
-		else if (f.equals(s2.getFarmer4()))
+		else if (crosser.equals(s2.getFarmer4()))
 			setcF4(c);
-		else if (f.equals(s2.getAnimal()))
+		else if (crosser.equals(s2.getAnimal()))
 			setcHerb(c);
 
 	}
@@ -66,18 +66,18 @@ public class ControlStory2 implements IRiverCrossingController {
 	// return false;
 	// }
 
-	public boolean validateMove(ICrosser f) {
+	public boolean validateMove(ICrosser crosser) {
 		/** disable the button **/
-		if ((isBoatOnTheLeftBank()) && (getCrossersOnRightBank().contains(f))
-				|| (!isBoatOnTheLeftBank()) && (getCrossersOnLeftBank().contains(f)))
+		if ((isBoatOnTheLeftBank()) && (getCrossersOnRightBank().contains(crosser))
+				|| (!isBoatOnTheLeftBank()) && (getCrossersOnLeftBank().contains(crosser)))
 			return true;
 		return false;
 	}
 
-	public boolean removeRight(ICrosser f) {
-		if ((!isBoatOnTheLeftBank()) && (getCrossersOnRightBank().contains(f))) {
-			AddBoatRiders(f);
-			getCrossersOnRightBank().remove(f);
+	public boolean removeRight(ICrosser crosser) {
+		if ((!isBoatOnTheLeftBank()) && (getCrossersOnRightBank().contains(crosser))) {
+			AddBoatRiders(crosser);
+			getCrossersOnRightBank().remove(crosser);
 
 			return true;
 		}
@@ -324,7 +324,7 @@ public class ControlStory2 implements IRiverCrossingController {
 
 	}
 
-	public boolean IsOnBoat(ICrosser crosser) {
+	public boolean isOnBoat(ICrosser crosser)  {
 		if (crosser.equals(s2.getFarmer1())) {
 			if (getcF1() % 2 == 0)
 				return true;
@@ -354,29 +354,43 @@ public class ControlStory2 implements IRiverCrossingController {
 
 	}
 
-	public void removeBoat(ICrosser f) {
-		if (f.equals(s2.getFarmer1())) {
+	public void removeBoat(ICrosser crosser) {
+		if (crosser.equals(s2.getFarmer1())) {
 
-			RemoveBoatRiders(f);
-			AddCharacterToBank(f);
+			RemoveBoatRiders(crosser);
+			AddCharacterToBank(crosser);
 
-		} else if (f.equals(s2.getFarmer2())) {
+		} else if (crosser.equals(s2.getFarmer2())) {
 
-			RemoveBoatRiders(f);
-			AddCharacterToBank(f);
-		} else if (f.equals(s2.getFarmer3())) {
+			RemoveBoatRiders(crosser);
+			AddCharacterToBank(crosser);
+		} else if (crosser.equals(s2.getFarmer3())) {
 
-			RemoveBoatRiders(f);
-			AddCharacterToBank(f);
-		} else if (f.equals(s2.getFarmer4())) {
+			RemoveBoatRiders(crosser);
+			AddCharacterToBank(crosser);
+		} else if (crosser.equals(s2.getFarmer4())) {
 
-			RemoveBoatRiders(f);
-			AddCharacterToBank(f);
-		} else if (f.equals(s2.getAnimal())) {
+			RemoveBoatRiders(crosser);
+			AddCharacterToBank(crosser);
+		} else if (crosser.equals(s2.getAnimal())) {
 
-			RemoveBoatRiders(f);
-			AddCharacterToBank(f);
+			RemoveBoatRiders(crosser);
+			AddCharacterToBank(crosser);
 		}
 
 	}
+
+	@Override
+	public int getMoves(ICrosser crosser) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public void setMoves(int moves) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	
 }

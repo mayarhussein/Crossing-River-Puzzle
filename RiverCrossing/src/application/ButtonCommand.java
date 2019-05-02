@@ -1,6 +1,5 @@
 package application;
 
-
 import java.awt.Button;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,69 +15,60 @@ public class ButtonCommand implements IButtonCommand {
 	private List<ICrosser> leftBankCrossers = new ArrayList<>();
 	private boolean isBoatOntheLeftBank;
 	private int numberOfSails;
-	
-	
-	
-	public ButtonCommand(List<ICrosser> rightBankCrossers, List<ICrosser> leftBankCrossers,
-			List<ICrosser> boatRiders, boolean isBoatOntheLeftBank, int numberOfSails) {
+
+	public ButtonCommand(List<ICrosser> rightBankCrossers, List<ICrosser> leftBankCrossers, List<ICrosser> boatRiders,
+			boolean isBoatOntheLeftBank, int numberOfSails) {
 		this.rightBankCrossers = rightBankCrossers;
 		this.leftBankCrossers = leftBankCrossers;
 		this.boatRiders = boatRiders;
 		this.isBoatOntheLeftBank = isBoatOntheLeftBank;
 		this.numberOfSails = numberOfSails;
-		
+
 	}
-	
+
 	public ButtonCommand(ButtonCommand currentCommand) {
 		storyController.setBoatRiders(boatRiders);
 		storyController.setLeftBankCrossers(leftBankCrossers);
 		storyController.setRightBankCrossers(rightBankCrossers);
 		storyController.setNumberOfSails(numberOfSails);
 	}
-	
-	/*@Override
-	public ICrossingStrategy startGame(ICrossingStrategy gameStrategy) {
 
-		storyController.setStory(gameStrategy);
-		storyController.setRightBankCrossers(gameStrategy.getInitialCrossers());
-		storyController.setLeftBankCrossers(null);
-		storyController.setBoatRiders(null);
-
-		return storyController.getStory();
-	}
-
+	/*
+	 * @Override public ICrossingStrategy startGame(ICrossingStrategy gameStrategy)
+	 * {
+	 * 
+	 * storyController.setStory(gameStrategy);
+	 * storyController.setRightBankCrossers(gameStrategy.getInitialCrossers());
+	 * storyController.setLeftBankCrossers(null);
+	 * storyController.setBoatRiders(null);
+	 * 
+	 * return storyController.getStory(); }
+	 * 
+	 * @Override public void stopGame(ICrossingStrategy gameStrategy) {
+	 * 
+	 * }
+	 * 
+	 * @Override public ICrossingStrategy restartGame(ICrossingStrategy
+	 * gameStrategy) { return startGame(gameStrategy); }
+	 * 
+	 * @Override public void newGame() { storyController.setStory(null); }
+	 * 
+	 * @Override public String[] help(ICrossingStrategy gameStrategy) { return
+	 * storyController.getInstructions(); }
+	 */
 	@Override
-	public void stopGame(ICrossingStrategy gameStrategy) {
-		
-	}
-
-	@Override
-	public ICrossingStrategy restartGame(ICrossingStrategy gameStrategy) {
-		return startGame(gameStrategy);
-	}
-
-	@Override
-	public void newGame() {
-		storyController.setStory(null);
-	}
-
-	@Override
-	public String[] help(ICrossingStrategy gameStrategy) {
-		return storyController.getInstructions();
-	}
-*/
-	@Override
-	public void movements(List<ICrosser> rightBankCrossers, List<ICrosser> leftBankCrossers,
-			List<ICrosser> boatRiders, boolean isBoatOntheLeftBank, int numberOfSails) {
-		ButtonCommand command = new ButtonCommand(rightBankCrossers, leftBankCrossers, boatRiders, isBoatOntheLeftBank, numberOfSails);
+	public void movements(List<ICrosser> rightBankCrossers, List<ICrosser> leftBankCrossers, List<ICrosser> boatRiders,
+			boolean isBoatOntheLeftBank, int numberOfSails) {
+		ButtonCommand command = new ButtonCommand(rightBankCrossers, leftBankCrossers, boatRiders, isBoatOntheLeftBank,
+				numberOfSails);
 		Controller.undoStack.push(command);
-		
+
 	}
 
 	@Override
 	public void undo() {
 		storyController.undo();
-		
+
 	}
 
 	@Override
@@ -89,21 +79,18 @@ public class ButtonCommand implements IButtonCommand {
 	@Override
 	public void saveGame() {
 		storyController.saveGame();
-		// TODO Auto-generated method stub
 
 	}
 
 	@Override
 	public void solveGame(ICrossingStrategy gameStrategy) {
-		// TODO Auto-generated method stub
 
 	}
 
 	@Override
 	public void loadGame() {
 		storyController.loadGame();
-		
+
 	}
 
 }
-

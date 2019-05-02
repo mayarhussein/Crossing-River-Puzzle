@@ -34,7 +34,7 @@ public class Controller implements IRiverCrossingController {
 	private ButtonCommand currentCommand;
 	private ICrossingStrategy story;
 
-	Controller() {
+	private Controller() {
 	}
 
 	public static Controller getControl() {
@@ -49,8 +49,8 @@ public class Controller implements IRiverCrossingController {
 		return PlantMoves;
 	}
 
-	public void setPlantMoves(int plantMoves) {
-		PlantMoves = plantMoves;
+	public void setPlantMoves(int Moves) {
+		PlantMoves = Moves;
 	}
 
 	public int getLionMoves() {
@@ -171,20 +171,24 @@ public class Controller implements IRiverCrossingController {
 
 	@Override
 	public boolean canMove(List<ICrosser> crossers, boolean fromLeftToRightBank) {
-		//if (story1.isValid(rightBankCrossers, leftBankCrossers, boatRiders))
-			//return true;
-if( (getCrossersOnRightBank().contains(herbivorous)) && (getCrossersOnRightBank().contains(plant)) &&  (!getCrossersOnRightBank().contains(carnivorous)))
-		return false;
-if( (getCrossersOnLeftBank().contains(herbivorous)) && (getCrossersOnLeftBank().contains(carnivorous)) &&  (!getCrossersOnLeftBank().contains(plant)))
-	return false;
+		// if (story1.isValid(rightBankCrossers, leftBankCrossers, boatRiders))
+		// return true;
+		if ((getCrossersOnRightBank().contains(herbivorous)) && (getCrossersOnRightBank().contains(plant))
+				&& (!getCrossersOnRightBank().contains(carnivorous)))
+			return false;
+		if ((getCrossersOnLeftBank().contains(herbivorous)) && (getCrossersOnLeftBank().contains(carnivorous))
+				&& (!getCrossersOnLeftBank().contains(plant)))
+			return false;
 
-if( (getCrossersOnRightBank().contains(herbivorous)) && (getCrossersOnRightBank().contains(carnivorous)) &&  (!getCrossersOnRightBank().contains(plant)))
-	return false;
+		if ((getCrossersOnRightBank().contains(herbivorous)) && (getCrossersOnRightBank().contains(carnivorous))
+				&& (!getCrossersOnRightBank().contains(plant)))
+			return false;
 
- if( (getCrossersOnLeftBank().contains(herbivorous)) && (getCrossersOnLeftBank().contains(plant)) &&  (!getCrossersOnLeftBank().contains(carnivorous)))
-	return false;
- else
-return true;
+		if ((getCrossersOnLeftBank().contains(herbivorous)) && (getCrossersOnLeftBank().contains(plant))
+				&& (!getCrossersOnLeftBank().contains(carnivorous)))
+			return false;
+		else
+			return true;
 
 	}
 
@@ -230,7 +234,6 @@ return true;
 			redoCount++;
 
 		}
-		// TODO Auto-generated method stub
 
 	}
 
@@ -352,8 +355,10 @@ return true;
 	}
 
 	public boolean IsPlantOnBoat() {
-		if (getPlantMoves() % 2 == 0)
-			return true;
+		
+			if (getPlantMoves() % 2 == 0)
+				return true;
+	
 		return false;
 
 	}

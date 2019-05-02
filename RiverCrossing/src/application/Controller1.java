@@ -1,5 +1,6 @@
 package application;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -55,7 +56,7 @@ public class Controller1 implements Initializable {
 	private ImageView cabbage;
 
 	Story1 story = new Story1();
-	Controller controller = new Controller();
+	MVC1 controller = new MVC1();
 	private Herbivorous herbivorous = new Herbivorous();
 	private Carnivorous carnivorous = new Carnivorous();
 	private Plants plant = new Plants();
@@ -376,7 +377,7 @@ public class Controller1 implements Initializable {
 
 	}
 
-	public void SaveGame(ActionEvent event) {
+	public void SaveGame(ActionEvent event) throws IOException {
 		controller.saveGame();
 
 	}

@@ -1,21 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane minHeight="600.0" minWidth="700.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.Controller2">
+<AnchorPane minHeight="600.0" minWidth="700.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.Controller2">
    <children>
       <ImageView fitHeight="600.0" fitWidth="700.0" layoutX="1.0" pickOnBounds="true">
          <image>
-            <Image url="@../../../../Desktop/BackGround.jpg" />
+            <Image url="@../../af1c3bb8-d238-4b41-8197-9b2612a89291.jpg" />
          </image>
       </ImageView>
       <ImageView fx:id="boat" fitHeight="62.0" fitWidth="158.0" layoutX="408.0" layoutY="462.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../../../../Desktop/boat_large_W.jpg" />
+            <Image url="@../../boat_large_W.jpg" />
          </image>
       </ImageView>
       <Button fx:id="go2" layoutX="287.0" layoutY="196.0" mnemonicParsing="false" onAction="#Go" prefHeight="61.0" prefWidth="83.0" style="-fx-background-color: 556B25; -fx-background-radius: 200;" text="Go!" textFill="#2d9418">
@@ -31,27 +36,27 @@
       <Button layoutX="161.0" layoutY="28.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="75.0" style="-fx-background-radius: 200;" text="Save Game" textFill="#d31515" />
       <ImageView fx:id="farmer4" fitHeight="83.0" fitWidth="52.0" layoutX="566.0" layoutY="351.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../../../../Desktop/player_action1.png" />
+            <Image url="@../../player_action1.png" />
          </image>
       </ImageView>
       <ImageView fx:id="farmer2" fitHeight="94.0" fitWidth="58.0" layoutX="508.0" layoutY="347.0" opacity="0.91" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../../../../Desktop/female_jump.png" />
+            <Image url="@../../female_jump.png" />
          </image>
       </ImageView>
       <ImageView fx:id="sheep1" fitHeight="59.0" fitWidth="55.0" layoutX="548.0" layoutY="421.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../../../../Desktop/WhatsApp%20Image%202019-04-22%20at%2010.20.49%20PM_burned%20(1)%20(1).png" />
+            <Image url="@../../WhatsApp%20Image%202019-04-22%20at%2010.20.49%20PM_burned%20(1)%20(1).png" />
          </image>
       </ImageView>
       <ImageView fx:id="farmer3" fitHeight="85.0" fitWidth="57.0" layoutX="403.0" layoutY="343.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../../../../Desktop/soldier_idle.png" />
+            <Image url="@../../soldier_idle.png" />
          </image>
       </ImageView>
       <ImageView fx:id="farmer1" fitHeight="81.0" fitWidth="55.0" layoutX="460.0" layoutY="345.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../../../../Desktop/adventurer_hold2.png" />
+            <Image url="@../../adventurer_hold2.png" />
          </image>
       </ImageView>
    </children>

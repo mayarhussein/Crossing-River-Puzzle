@@ -36,7 +36,7 @@ public class SampleController implements Initializable {
 		lvlChoice1.getItems().addAll("Story 1", "Story 2");
 	}
 
-	Controller controller = new Controller();
+	Controller controller = Controller.getControl();
 
 	public void actionBtn1(ActionEvent event) throws IOException {
 		if (lvlChoice.getValue().equals("Story 1")) {
