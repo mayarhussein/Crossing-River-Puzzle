@@ -36,27 +36,27 @@
       <Button layoutX="161.0" layoutY="28.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="75.0" style="-fx-background-radius: 200;" text="Save Game" textFill="#d31515" />
       <ImageView fx:id="farmer4" fitHeight="83.0" fitWidth="52.0" layoutX="566.0" layoutY="351.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../../player_action1.png" />
+            <Image url="@../../black%201.png" />
          </image>
       </ImageView>
       <ImageView fx:id="farmer2" fitHeight="94.0" fitWidth="58.0" layoutX="508.0" layoutY="347.0" opacity="0.91" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../../female_jump.png" />
+            <Image url="@../../crush%20mayar.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="sheep1" fitHeight="59.0" fitWidth="55.0" layoutX="548.0" layoutY="421.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="sheep1" fitHeight="81.0" fitWidth="53.0" layoutX="540.0" layoutY="407.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../../WhatsApp%20Image%202019-04-22%20at%2010.20.49%20PM_burned%20(1)%20(1).png" />
+            <Image url="@../../sheep2.png" />
          </image>
       </ImageView>
       <ImageView fx:id="farmer3" fitHeight="85.0" fitWidth="57.0" layoutX="403.0" layoutY="343.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../../soldier_idle.png" />
+            <Image url="@../../blonde%203.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="farmer1" fitHeight="81.0" fitWidth="55.0" layoutX="460.0" layoutY="345.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="farmer1" fitHeight="94.0" fitWidth="47.0" layoutX="460.0" layoutY="345.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../../adventurer_hold2.png" />
+            <Image url="@../../girl.png" />
          </image>
       </ImageView>
    </children>
