@@ -31,11 +31,12 @@ public class Controller2 implements Initializable {
 
 	MVC2 controller2 = new MVC2();
 	Story2 story2 = Story2.getStory2();
-
+	Herbivorous animal = Herbivorous.getHerbivorous();
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		
 		story2.setFarmers();
+		story2.setAnimal(animal);
 		controller2.getCrossersOnRightBank().add(story2.getFarmer1());
 		controller2.getCrossersOnRightBank().add(story2.getFarmer2());
 		controller2.getCrossersOnRightBank().add(story2.getFarmer3());
@@ -66,6 +67,7 @@ public class Controller2 implements Initializable {
 
 		if (story2.isValid(controller2.getCrossersOnLeftBank(), controller2.getCrossersOnRightBank(),
 				controller2.getBoatRiders())) {
+		//	System.out.println(controller2.getCrossersOnRightBank().contains(animal));
 			if (controller2.isBoatOnTheLeftBank()) {
 
 				controller2.doMove(null, false);
@@ -181,7 +183,7 @@ public class Controller2 implements Initializable {
 
 		}
 		else
-			 Alert.displayAlert("Ivalid Move","Warning"); 
+			 Alert.displayAlert("Invalid Move","Warning"); 
 	}
 	
 
@@ -250,6 +252,9 @@ public class Controller2 implements Initializable {
 			}
 
 		}
+		if (story2.gameCompleted(controller2.getCrossersOnLeftBank()))
+			 Alert.displayAlert("Game Completed","\tYAY!\t"); 
+		
 
 	}
 
@@ -328,6 +333,8 @@ public class Controller2 implements Initializable {
 			}
 
 		}
+		if (story2.gameCompleted(controller2.getCrossersOnLeftBank()))
+			 Alert.displayAlert("Game Completed","\tYAY!\t"); 
 
 	}
 
@@ -394,6 +401,8 @@ public class Controller2 implements Initializable {
 			}
 
 		}
+		if (story2.gameCompleted(controller2.getCrossersOnLeftBank()))
+			 Alert.displayAlert("Game Completed","\tYAY!\t"); 
 
 	}
 
@@ -460,19 +469,23 @@ public class Controller2 implements Initializable {
 			}
 
 		}
-
+		if (story2.gameCompleted(controller2.getCrossersOnLeftBank()))
+			 Alert.displayAlert("Game Completed","\tYAY!\t"); 
 	}
 
 	public void GoSheep() {
-
+		//System.out.println("in");
 		
 		if ((controller2.isBoatOnTheLeftBank())
 				&& (controller2.getCrossersOnRightBank().contains(story2.getAnimal()))) ;
 		else if ((!controller2.isBoatOnTheLeftBank())
 				&& (controller2.getCrossersOnLeftBank().contains(story2.getAnimal())));
 		else {
-			if (controller2.isOnBoat(story2.getAnimal())) {
+			
+			if (controller2.isSheepOnBoat(story2.getAnimal())) {
+			
 				controller2.removeBoat(story2.getAnimal());
+			
 				// controller2.RemoveBoatRiders(story2.getFarmer1());
 				TranslateTransition transition3 = new TranslateTransition();
 				// transition3.setDelay(Duration.seconds(3));
@@ -526,7 +539,8 @@ public class Controller2 implements Initializable {
 			}
 
 		}
-
+		if (story2.gameCompleted(controller2.getCrossersOnLeftBank()))
+			 Alert.displayAlert("Game Completed","\tYAY!\t"); 
 	}
 	public void undo() {
 		

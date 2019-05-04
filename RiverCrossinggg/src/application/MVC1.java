@@ -5,7 +5,7 @@ import java.util.List;
 
 public class MVC1 implements IRiverCrossingController, IControlStory1{
 	
-	Controller MVCController = Controller.getControl();
+	ControlStory1 MVCController = ControlStory1.getControl();
 	@Override
 	public void moveSheep() {
 	MVCController.moveSheep();
@@ -231,13 +231,13 @@ public class MVC1 implements IRiverCrossingController, IControlStory1{
 		return MVCController.IsPlantOnBoat();
 	}
 
-	public void decreaseMoves() {
-		 MVCController.decreaseMoves();
+	public void decreaseMoves(String obj) {
+		 MVCController.decreaseMoves(obj);
 		
 	}
 
-	public void increaseMoves() {
-		 MVCController.increaseMoves();
+	public void increaseMoves(String obj) {
+		 MVCController.increaseMoves(obj);
 		
 	}
 

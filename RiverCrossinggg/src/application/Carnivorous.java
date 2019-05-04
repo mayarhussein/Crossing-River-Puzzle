@@ -7,6 +7,18 @@ import java.awt.image.BufferedImage;
 
 public class Carnivorous extends Animals{
 
+ private static Carnivorous carnivorous = null;
+	
+	private Carnivorous() {
+
+	}
+
+	public static Carnivorous getCarnivorous() {
+		if (carnivorous == null)
+			return carnivorous = new Carnivorous();
+		else
+			return carnivorous;
+	}
 	@Override
 	public boolean canSail() {
 		return false;
@@ -42,11 +54,6 @@ public class Carnivorous extends Animals{
 
 	@Override
 	public String getLabelToBeShown() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public static Carnivorous getCarnivorous() {
 		// TODO Auto-generated method stub
 		return null;
 	}

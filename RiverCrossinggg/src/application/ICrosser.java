@@ -9,6 +9,7 @@ public interface ICrosser {
 	public boolean canSail();
 
 	public double getWeight();
+	
 
 	public int getEatingRank();
 

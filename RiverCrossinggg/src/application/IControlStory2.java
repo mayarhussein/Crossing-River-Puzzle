@@ -6,6 +6,8 @@ public interface IControlStory2 {
 
 	public boolean isOnBoat(ICrosser crosser);
 
+	public boolean isSheepOnBoat(Herbivorous crosser);
+
 	public boolean validateMove(ICrosser crosser);
 
 	public void moveCrosser(ICrosser crosser);

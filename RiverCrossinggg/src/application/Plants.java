@@ -4,21 +4,30 @@ import java.awt.image.BufferedImage;
 
 public class Plants implements ICrosser {
 
+private static Plants plants= null;
+	
+	private Plants(){
+	}
+
+	public static Plants getPlants() {
+		if (plants== null)
+			return plants= new Plants();
+		else
+			return plants;
+	}
 	@Override
 	public boolean canSail() {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public double getWeight() {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
 	public int getEatingRank() {
-		// TODO Auto-generated method stub
+		
 		return 0;
 	}
 
@@ -42,11 +51,6 @@ public class Plants implements ICrosser {
 
 	@Override
 	public String getLabelToBeShown() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public static Plants getPlants() {
 		// TODO Auto-generated method stub
 		return null;
 	}

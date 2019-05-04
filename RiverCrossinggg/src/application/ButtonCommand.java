@@ -9,7 +9,7 @@ public class ButtonCommand implements IButtonCommand {
 
 	// kol button lih concrete command lowa7do mostakel b zato w 7ada5al fihhom el
 	// redo wel undo
-	private Controller storyController = Controller.getControl();
+	private ControlStory1 storyController = ControlStory1.getControl();
 	private List<ICrosser> rightBankCrossers = new ArrayList<>();
 	private List<ICrosser> boatRiders = new ArrayList<>();
 	private List<ICrosser> leftBankCrossers = new ArrayList<>();
@@ -61,7 +61,7 @@ public class ButtonCommand implements IButtonCommand {
 			boolean isBoatOntheLeftBank, int numberOfSails) {
 		ButtonCommand command = new ButtonCommand(rightBankCrossers, leftBankCrossers, boatRiders, isBoatOntheLeftBank,
 				numberOfSails);
-		Controller.undoStack.push(command);
+		ControlStory1.undoStack.push(command);
 
 	}
 

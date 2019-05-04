@@ -5,6 +5,17 @@ package application;
 import java.awt.image.BufferedImage;
 
 public class Herbivorous extends Animals {
+	private static Herbivorous herbivorous = null;
+	
+	private Herbivorous(){
+	}
+
+	public static Herbivorous getHerbivorous() {
+		if (herbivorous == null)
+			return herbivorous = new Herbivorous();
+		else
+			return herbivorous;
+	}
 
 	@Override
 	public boolean canSail() {
@@ -45,9 +56,6 @@ public class Herbivorous extends Animals {
 		return null;
 	}
 
-	public static Herbivorous getHerbivorous() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+
 
 }
