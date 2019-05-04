@@ -6,6 +6,8 @@ import java.util.List;
 public class MVC1 implements IRiverCrossingController, IControlStory1{
 	
 	ControlStory1 MVCController = ControlStory1.getControl();
+	
+
 	@Override
 	public void moveSheep() {
 	MVCController.moveSheep();

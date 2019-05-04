@@ -60,8 +60,7 @@ public class SampleController implements Initializable {
 	}
 
 	public void exitGame()  {
-		 Stage stage = (Stage) exitBtn.getScene().getWindow();
-		 stage.close();
+		System. exit(0);
 	 }
 
 	public void actionBtn2(ActionEvent event) throws IOException {

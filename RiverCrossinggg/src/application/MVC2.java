@@ -5,7 +5,9 @@ import java.util.List;
 
 public class MVC2 implements IRiverCrossingController , IControlStory2{
 	ControlStory2 MVCCommand = ControlStory2.getControlStory2();
-	
+	public void decreaseMoves(String obj) {
+		MVCCommand.decreaseMoves(obj);
+	}
 	@Override
 	public void setCounter(int c, ICrosser crosser) {
 		MVCCommand.setCounter(c, crosser);

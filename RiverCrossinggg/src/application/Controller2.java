@@ -1,14 +1,21 @@
 package application;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.Stack;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 import javafx.animation.*;
 import javafx.event.ActionEvent;
@@ -28,13 +35,24 @@ public class Controller2 implements Initializable {
 	private ImageView farmer4;
 	@FXML
 	private ImageView sheep1;
+	@FXML
+	private Button esc;
+	@FXML
+	private Button reset;
+	@FXML
+	private Button undo;
+	@FXML
+	private Label score;
 
 	MVC2 controller2 = new MVC2();
 	Story2 story2 = Story2.getStory2();
 	Herbivorous animal = Herbivorous.getHerbivorous();
+	static Stack<String> undoStack1 = new Stack<>();
+	static Stack<String> redoStack1 = new Stack<>();
+
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		
+
 		story2.setFarmers();
 		story2.setAnimal(animal);
 		controller2.getCrossersOnRightBank().add(story2.getFarmer1());
@@ -63,11 +81,11 @@ public class Controller2 implements Initializable {
 		});
 	}
 
-	public void Go(ActionEvent event) {
+	public void Go() {
 
 		if (story2.isValid(controller2.getCrossersOnLeftBank(), controller2.getCrossersOnRightBank(),
 				controller2.getBoatRiders())) {
-		//	System.out.println(controller2.getCrossersOnRightBank().contains(animal));
+			// System.out.println(controller2.getCrossersOnRightBank().contains(animal));
 			if (controller2.isBoatOnTheLeftBank()) {
 
 				controller2.doMove(null, false);
@@ -178,14 +196,13 @@ public class Controller2 implements Initializable {
 					transition3.setToX(-200);
 					transition3.play();
 				}
-
+				score.setText(Integer.toString(controller2.getNumberOfSails()));
+				undoStack1.push("boat");
 			}
 
-		}
-		else
-			 Alert.displayAlert("Invalid Move","Warning"); 
+		} else
+			Alert.displayAlert("Invalid Move", "Warning");
 	}
-	
 
 	public void GoFarmer1() {
 
@@ -205,7 +222,7 @@ public class Controller2 implements Initializable {
 				transition3.setDuration(Duration.seconds(1));
 				transition3.setNode(farmer1);
 				transition3.setToY(-20);
-				
+
 				transition3.play();
 				controller2.moveCrosser(story2.getFarmer1());
 
@@ -223,7 +240,7 @@ public class Controller2 implements Initializable {
 					transition.setDelay(Duration.seconds(3));
 					transition.setDuration(Duration.seconds(1));
 					transition.setNode(farmer1);
-					//transition.setToX(-70);
+					// transition.setToX(-70);
 					transition.setToY(50);
 
 					transition1.play();
@@ -253,9 +270,9 @@ public class Controller2 implements Initializable {
 
 		}
 		if (story2.gameCompleted(controller2.getCrossersOnLeftBank()))
-			 Alert.displayAlert("Game Completed","\tYAY!\t"); 
-		
+			Alert.displayAlert("Game Completed", "\tYAY!\t");
 
+		undoStack1.push("farmer1");
 	}
 
 	public void GoFarmer2() {
@@ -334,12 +351,12 @@ public class Controller2 implements Initializable {
 
 		}
 		if (story2.gameCompleted(controller2.getCrossersOnLeftBank()))
-			 Alert.displayAlert("Game Completed","\tYAY!\t"); 
-
+			Alert.displayAlert("Game Completed", "\tYAY!\t");
+		undoStack1.push("farmer2");
 	}
 
 	public void GoFarmer3() {
-		
+
 		if ((controller2.isBoatOnTheLeftBank()) && (controller2.getCrossersOnRightBank().contains(story2.getFarmer3())))
 			;
 		else if ((!controller2.isBoatOnTheLeftBank())
@@ -402,18 +419,19 @@ public class Controller2 implements Initializable {
 
 		}
 		if (story2.gameCompleted(controller2.getCrossersOnLeftBank()))
-			 Alert.displayAlert("Game Completed","\tYAY!\t"); 
-
+			Alert.displayAlert("Game Completed", "\tYAY!\t");
+		undoStack1.push("farmer3");
 	}
 
 	public void GoFarmer4() {
 
-		if ((controller2.isBoatOnTheLeftBank())
-				&& (controller2.getCrossersOnRightBank().contains(story2.getFarmer4())));
+		if ((controller2.isBoatOnTheLeftBank()) && (controller2.getCrossersOnRightBank().contains(story2.getFarmer4())))
+			;
 
 		else if ((!controller2.isBoatOnTheLeftBank())
-				&& (controller2.getCrossersOnLeftBank().contains(story2.getFarmer4()))) ;
-		 else {
+				&& (controller2.getCrossersOnLeftBank().contains(story2.getFarmer4())))
+			;
+		else {
 			if (controller2.isOnBoat(story2.getFarmer4())) {
 				controller2.removeBoat(story2.getFarmer4());
 				// controller2.RemoveBoatRiders(story2.getFarmer1());
@@ -430,7 +448,7 @@ public class Controller2 implements Initializable {
 			else {
 
 				if (!controller2.isBoatOnTheLeftBank()) {
-					
+
 					controller2.AddBoatRiders(story2.getFarmer4());
 					controller2.getCrossersOnRightBank().remove(story2.getFarmer4());
 					RotateTransition transition1 = new RotateTransition(Duration.seconds(3), farmer4);
@@ -470,22 +488,24 @@ public class Controller2 implements Initializable {
 
 		}
 		if (story2.gameCompleted(controller2.getCrossersOnLeftBank()))
-			 Alert.displayAlert("Game Completed","\tYAY!\t"); 
+			Alert.displayAlert("Game Completed", "\tYAY!\t");
+		undoStack1.push("farmer4");
 	}
 
 	public void GoSheep() {
-		//System.out.println("in");
-		
-		if ((controller2.isBoatOnTheLeftBank())
-				&& (controller2.getCrossersOnRightBank().contains(story2.getAnimal()))) ;
+		// System.out.println("in");
+
+		if ((controller2.isBoatOnTheLeftBank()) && (controller2.getCrossersOnRightBank().contains(story2.getAnimal())))
+			;
 		else if ((!controller2.isBoatOnTheLeftBank())
-				&& (controller2.getCrossersOnLeftBank().contains(story2.getAnimal())));
+				&& (controller2.getCrossersOnLeftBank().contains(story2.getAnimal())))
+			;
 		else {
-			
+
 			if (controller2.isSheepOnBoat(story2.getAnimal())) {
-			
+
 				controller2.removeBoat(story2.getAnimal());
-			
+
 				// controller2.RemoveBoatRiders(story2.getFarmer1());
 				TranslateTransition transition3 = new TranslateTransition();
 				// transition3.setDelay(Duration.seconds(3));
@@ -540,11 +560,87 @@ public class Controller2 implements Initializable {
 
 		}
 		if (story2.gameCompleted(controller2.getCrossersOnLeftBank()))
-			 Alert.displayAlert("Game Completed","\tYAY!\t"); 
+			Alert.displayAlert("Game Completed", "\tYAY!\t");
+
+		undoStack1.push("sheep");
 	}
-	public void undo() {
-		
+
+	public void esc(ActionEvent event) throws IOException
+
+	{
+
+		Stage stage2 = (Stage) ((Node) event.getSource()).getScene().getWindow();
+		AnchorPane root = (AnchorPane) FXMLLoader.load(getClass().getResource("GUI.fxml"));
+		Scene scene = new Scene(root, 700, 600);
+		stage2.setScene(scene);
+		stage2.show();
+
 	}
+
+	public void reset(ActionEvent event) throws IOException
+
+	{
+
+		Stage stage2 = (Stage) ((Node) event.getSource()).getScene().getWindow();
+		AnchorPane root = (AnchorPane) FXMLLoader.load(getClass().getResource("Story2.fxml"));
+		Scene scene = new Scene(root, 700, 600);
+		stage2.setScene(scene);
+		stage2.show();
+
+	}
+
+	public void undo(ActionEvent event) {
+
+		if (undoStack1.peek().equals("farmer1")) {
+
+			GoFarmer1();
+			redoStack1.push(undoStack1.pop());
+			controller2.decreaseMoves("farmer1");
+
+		}
+
+		if (undoStack1.peek().equals("farmer2")) {
+
+			GoFarmer2();
+			redoStack1.push(undoStack1.pop());
+			controller2.decreaseMoves("farmer2");
+
+		}
+
+		if (undoStack1.peek().equals("farmer3")) {
+
+			GoFarmer3();
+			redoStack1.push(undoStack1.pop());
+			controller2.decreaseMoves("farmer3");
+
+		}
+
+		if (undoStack1.peek().equals("farmer4")) {
+			
+			GoFarmer4();
+			redoStack1.push(undoStack1.pop());
+			controller2.decreaseMoves("farmer4");
+
+		}
+
+		if (undoStack1.peek().equals("sheep")) {
+			
+			GoSheep();
+			redoStack1.push(undoStack1.pop());
+			controller2.decreaseMoves("sheep");
+
+		}
+
+		if (undoStack1.peek().equals("boat")) {
+			
+			Go();
+			redoStack1.push(undoStack1.pop());
+			controller2.decreaseMoves("boat");
+
+		}
+
+	}
+	
 
 	public boolean Disable(Button b) {
 		b.setDisable(true);

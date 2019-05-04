@@ -8,12 +8,16 @@ import java.util.ResourceBundle;
 import java.util.Stack;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 import javafx.animation.*;
 import javafx.animation.TranslateTransition;
@@ -57,7 +61,11 @@ public class Controller1 implements Initializable {
 	@FXML
 	private ImageView cabbage;
 	@FXML
-	Button undo;
+	private Button undo;
+	@FXML
+	private Button esc;
+	@FXML
+	private Button reset;
 
 	Story1 story = Story1.getStory1();
 	MVC1 controller = new MVC1();
@@ -65,6 +73,7 @@ public class Controller1 implements Initializable {
 	private Carnivorous carnivorous = Carnivorous.getCarnivorous();
 	private Plants plant = Plants.getPlants();
 	static Stack<String> undoStack1 = new Stack<>();
+	static Stack<String> redoStack1 = new Stack<>();
 
 	// static Stack <String> Stack1= new Stack<>();
 	@Override
@@ -101,11 +110,11 @@ public class Controller1 implements Initializable {
 		 * RotateTransition(Duration.seconds(3),farmer); transition1.setFromAngle(0);
 		 * transition1.setToAngle(360);
 		 */
-	/*	if (story.gameCompleted(controller.getCrossersOnLeftBank())) {
-			
-			 Alert.displayAlert("Game Completed","\tYAY\t!"); 
-		}
-*/
+		/*
+		 * if (story.gameCompleted(controller.getCrossersOnLeftBank())) {
+		 * 
+		 * Alert.displayAlert("Game Completed","\tYAY\t!"); }
+		 */
 		if (story.isValid(controller.getCrossersOnRightBank(), controller.getCrossersOnLeftBank(),
 				controller.getBoatRiders())) {
 			if (controller.isBoatOnTheLeftBank()) {
@@ -205,12 +214,11 @@ public class Controller1 implements Initializable {
 			}
 
 			score.setText(Integer.toString(controller.getNumberOfSails()));
-			
-			
+
 			undoStack1.push("boat");
 
-		}else
-				 Alert.displayAlert("Invalid Move","Warning"); 
+		} else
+			Alert.displayAlert("Invalid Move", "Warning");
 	}
 
 	public boolean Disable(Button b) {
@@ -285,16 +293,12 @@ public class Controller1 implements Initializable {
 
 				controller.getCrossersOnRightBank().remove(herbivorous);
 			}
-			
-			
 
 			controller.moveSheep();
-			
+
 			if (story.gameCompleted(controller.getCrossersOnLeftBank()))
-				 Alert.displayAlert("Game Completed","\tYAY\t!"); 
+				Alert.displayAlert("Game Completed", "\tYAY\t!");
 			undoStack1.push("sheep");
-			
-			
 
 		}
 
@@ -369,10 +373,10 @@ public class Controller1 implements Initializable {
 			}
 
 			controller.moveLion();
-			
+
 			if (story.gameCompleted(controller.getCrossersOnLeftBank()))
-				 Alert.displayAlert("Game Completed","\tYAY!\t"); 
-			
+				Alert.displayAlert("Game Completed", "\tYAY!\t");
+
 			undoStack1.push("lion");
 
 		}
@@ -469,10 +473,10 @@ public class Controller1 implements Initializable {
 			}
 
 			controller.movePlant();
-			
+
 			if (story.gameCompleted(controller.getCrossersOnLeftBank()))
-				 Alert.displayAlert("Game Completed","\tYAY!\t"); 
-			
+				Alert.displayAlert("Game Completed", "\tYAY!\t");
+
 			undoStack1.push("plant");
 
 		}
@@ -480,34 +484,66 @@ public class Controller1 implements Initializable {
 	}
 
 	public void undo(ActionEvent event) {
-		
-		if (undoStack1.pop().equals("sheep")) {
+
+		if (undoStack1.peek().equals("sheep")) {
 
 			GoSheep();
+			redoStack1.push(undoStack1.pop());
 			controller.decreaseMoves("sheep");
 
 		}
 
-		if (undoStack1.pop().equals("lion")) {
+		if (undoStack1.peek().equals("lion")) {
 
 			GoLion();
+			redoStack1.push(undoStack1.pop());
 			controller.decreaseMoves("lion");
 
 		}
 
-		if (undoStack1.pop().equals("plant")) {
+		if (undoStack1.peek().equals("plant")) {
 
 			GoPlant();
+			redoStack1.push(undoStack1.pop());
 			controller.decreaseMoves("plant");
 
 		}
 
-		if (undoStack1.pop().equals("boat")) {
-			System.out.println("on");
+		if (undoStack1.peek().equals("boat")) {
+
 			Go();
+			redoStack1.push(undoStack1.pop());
 			controller.decreaseMoves("boat");
 
 		}
+
+	}
+
+	public void redo() {
+
+	}
+
+	public void esc(ActionEvent event) throws IOException
+
+	{
+
+		Stage stage2 = (Stage) ((Node) event.getSource()).getScene().getWindow();
+		AnchorPane root = (AnchorPane) FXMLLoader.load(getClass().getResource("GUI.fxml"));
+		Scene scene = new Scene(root, 700, 600);
+		stage2.setScene(scene);
+		stage2.show();
+
+	}
+
+	public void reset(ActionEvent event) throws IOException
+
+	{
+
+		Stage stage2 = (Stage) ((Node) event.getSource()).getScene().getWindow();
+		AnchorPane root = (AnchorPane) FXMLLoader.load(getClass().getResource("Story1.fxml"));
+		Scene scene = new Scene(root, 700, 600);
+		stage2.setScene(scene);
+		stage2.show();
 
 	}
 

@@ -379,6 +379,14 @@ public class ControlStory1 implements IRiverCrossingController {
 		x = getNumberOfSails();
 		x--;
 		setNumberOfSails(x);
+		for (int i = 0 ; i<getBoatRiders().size() ; i++) {
+			if (getBoatRiders().contains(carnivorous))
+				setLionMoves(getLionMoves() -1);
+			if (getBoatRiders().contains(herbivorous))
+				setSheepMoves(getSheepMoves() -1);
+			if (getBoatRiders().contains(plant))
+				setPlantMoves(getPlantMoves()-1);
+		}
 		}
 
 		if (getSheepMoves() > 0 && obj.equals("sheep")) {
