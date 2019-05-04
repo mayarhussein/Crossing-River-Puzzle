@@ -1,9 +1,11 @@
 package application;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
+import java.util.Stack;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -54,13 +56,15 @@ public class Controller1 implements Initializable {
 	private Button save;
 	@FXML
 	private ImageView cabbage;
+	@FXML Button undo;
 
 	Story1 story = new Story1();
 	MVC1 controller = new MVC1();
 	private Herbivorous herbivorous = new Herbivorous();
 	private Carnivorous carnivorous = new Carnivorous();
 	private Plants plant = new Plants();
-
+	static Stack <String> undoStack1= new Stack<>();
+	//static Stack <String> Stack1= new Stack<>();
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		// TODO Auto-generated method stub
@@ -88,7 +92,7 @@ public class Controller1 implements Initializable {
 
 	// GO BUTTON
 
-	public void Go(ActionEvent event) {
+	public void Go() {
 
 		/**
 		 * RotateTransition transition1=new
@@ -203,7 +207,7 @@ public class Controller1 implements Initializable {
 		}
 
 		score.setText(Integer.toString(controller.getNumberOfSails()));
-		// transition1.play();
+		undoStack1.push("boat");
 
 	}
 
@@ -281,6 +285,8 @@ public class Controller1 implements Initializable {
 			}
 
 			controller.moveSheep();
+			undoStack1.push("sheep");
+			
 
 		}
 
@@ -355,6 +361,7 @@ public class Controller1 implements Initializable {
 			}
 
 			controller.moveLion();
+			undoStack1.push("lion");
 
 		}
 
@@ -450,8 +457,59 @@ public class Controller1 implements Initializable {
 			}
 
 			controller.movePlant();
+			undoStack1.push("plant");
 
 		}
 
 	}
+	
+	
+	
+	public void undo(ActionEvent event)
+	{
+	if(undoStack1.pop().equals("sheep")) {
+			
+		GoSheep();
+		controller.decreaseMoves();
+		
+		
+	}
+	
+	if(undoStack1.pop().equals("lion")) {
+		
+		GoLion();
+		controller.decreaseMoves();
+		
+		
+	}
+	
+if(undoStack1.pop().equals("plant")) {
+		
+		GoPlant();
+		controller.decreaseMoves();
+		
+		
+	}
+
+
+if(undoStack1.pop().equals("boat")) {
+	
+	Go();
+	controller.decreaseMoves();
+	
+	
+}
+
+		
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+
 }

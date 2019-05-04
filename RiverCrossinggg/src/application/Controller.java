@@ -21,6 +21,8 @@ public class Controller implements IRiverCrossingController {
 
 	static Stack<ButtonCommand> undoStack = new Stack<>();
 	static Stack<ButtonCommand> redoStack = new Stack<>();
+	static Stack <String> undoStack1= new Stack<>();
+	
 
 	private Herbivorous herbivorous = Herbivorous.getHerbivorous();
 	private Carnivorous carnivorous = Carnivorous.getCarnivorous();
@@ -216,12 +218,16 @@ public class Controller implements IRiverCrossingController {
 
 	@Override
 	public void undo() {
-		if (canUndo()) {
-			numberOfSails--;
-			undoCount++;
-			ButtonCommand currentCommand = new ButtonCommand(undoStack.pop());
-			redoStack.push(currentCommand);
-		}
+		//if (canUndo()) {
+			//numberOfSails--;
+			//undoCount++;
+			//ButtonCommand currentCommand = new ButtonCommand(undoStack.pop());
+			//redoStack.push(currentCommand);
+		//}
+		
+		
+	
+		
 
 	}
 
@@ -370,5 +376,69 @@ public class Controller implements IRiverCrossingController {
 			rightBankCrossers.add(crosser);
 
 	}
+	
+	public void decreaseMoves() {
+		int x = getNumberOfSails();
+		x--;
+		setNumberOfSails(x);
+		
+		if(getSheepMoves()>0) {
+			
+			int y = getSheepMoves();
+			y--;
+			setSheepMoves(y);
+		}
+		
+if(getLionMoves()>0) {
+			
+			int y = getLionMoves();
+			y--;
+			setLionMoves(y);
+		}
+
+
+if(getPlantMoves()>0) {
+	
+	int y = getPlantMoves();
+	y--;
+	setPlantMoves(y);
+}
+			
+		
+		
+	}
+	
+	
+	public void increaseMoves() {
+		int x = getNumberOfSails();
+		x++;
+		setNumberOfSails(x);
+		
+		if(getSheepMoves()>0) {
+			
+			int y = getSheepMoves();
+			y++;
+			setSheepMoves(y);
+		}
+		
+if(getLionMoves()>0) {
+			
+			int y = getLionMoves();
+			y++;
+			setLionMoves(y);
+		}
+
+
+if(getPlantMoves()>0) {
+	
+	int y = getPlantMoves();
+	y++;
+	setPlantMoves(y);
+}
+			
+		
+		
+	}
+	
 
 }

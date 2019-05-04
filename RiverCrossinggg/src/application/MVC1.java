@@ -231,6 +231,16 @@ public class MVC1 implements IRiverCrossingController, IControlStory1{
 		return MVCController.IsPlantOnBoat();
 	}
 
+	public void decreaseMoves() {
+		 MVCController.decreaseMoves();
+		
+	}
+
+	public void increaseMoves() {
+		 MVCController.increaseMoves();
+		
+	}
+
 	/*@Override
 	public void move(ICrosser crosser) {
 		// TODO Auto-generated method stub
