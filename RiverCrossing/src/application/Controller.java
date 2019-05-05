@@ -2,11 +2,13 @@ package application;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ResourceBundle;
 import java.util.Stack;
 import java.beans.XMLEncoder;
 import java.beans.XMLDecoder;
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.FilterOutputStream;
@@ -25,7 +27,13 @@ public class Controller implements IRiverCrossingController {
 	private Herbivorous herbivorous = Herbivorous.getHerbivorous();
 	private Carnivorous carnivorous = Carnivorous.getCarnivorous();
 	private Plants plant = Plants.getPlants();
+	
+	public  List<ICrosser> Right = new ArrayList<>();
+	public List<ICrosser> Left = new ArrayList<>();
+	public List<ICrosser> boat = new ArrayList<>();
 
+	
+	
 	private List<ICrosser> rightBankCrossers = new ArrayList<>();
 	private List<ICrosser> leftBankCrossers = new ArrayList<>();
 	private List<ICrosser> boatRiders = new ArrayList<>();
@@ -33,6 +41,7 @@ public class Controller implements IRiverCrossingController {
 	private static Controller control = null;
 	private ButtonCommand currentCommand;
 	private ICrossingStrategy story;
+	private Controller1 controller1;
 
 	private Controller() {
 	}
@@ -147,8 +156,8 @@ public class Controller implements IRiverCrossingController {
 
 	@Override
 	public List<ICrosser> getCrossersOnLeftBank() {
-
-		return leftBankCrossers;
+		System.out.println("BEFORE RETURN: "+leftBankCrossers);
+		return this.leftBankCrossers;
 	}
 
 	@Override
@@ -269,47 +278,118 @@ public class Controller implements IRiverCrossingController {
 		}
 		;
 
-		// try {
-		// FileOutputStream fos = new FileOutputStream(new File("./Save.xml"));
-
-		// }catch(IOException ex) {};
-
+		
+		try {
+			FileOutputStream fos4 = new FileOutputStream(new File("./Sales.xml"));
+			XMLEncoder encoder4 = new XMLEncoder(fos4);
+			encoder4.writeObject(numberOfSails);
+			encoder4.close();
+			fos4.close();
+		} catch (IOException ex) {
+		}
+		;
+		
+		
 	}
 
 	@Override
 	public void loadGame() {
 		try {
+			System.out.println("3amor");
 			FileInputStream fis = new FileInputStream(new File("./Saveleft.xml"));
 			XMLDecoder decoder = new XMLDecoder(fis);
-			leftBankCrossers = (List<ICrosser>) decoder.readObject();
-			setLeftBankCrossers(leftBankCrossers);
+			Left = (List<ICrosser>) decoder.readObject();
+			System.out.println("LEFT::: "+Left+"SIZE:: "+Left.size());
+			System.out.println(leftBankCrossers.size());
+			leftBankCrossers.clear();
+			setLeftBankCrossers(Left);
+			//leftBankCrossers.addAll(Left);
+			System.out.println("BLAAA"+leftBankCrossers);
+//			if(Left.contains())
+//				System.out.println("HIIIII");
+		//	setLeftBankCrossers(Left);
+			System.out.println(leftBankCrossers);
 			decoder.close();
 			fis.close();
-		} catch (IOException ex2) {
-		}
-		;
-
-		try {
+			if (leftBankCrossers.contains(herbivorous)) {
+				System.out.println("HATNF3");
+			}
+			System.out.println("3amor2");
 			FileInputStream fis2 = new FileInputStream(new File("./Saveright.xml"));
 			XMLDecoder decoder2 = new XMLDecoder(fis2);
-			rightBankCrossers = (List<ICrosser>) decoder2.readObject();
-			setRightBankCrossers(rightBankCrossers);
+			Right = (List<ICrosser>) decoder2.readObject();
+			System.out.println(rightBankCrossers.size());
+			
+			setRightBankCrossers(Right);
+			System.out.println(rightBankCrossers.size());
+			
 			decoder2.close();
 			fis2.close();
+			
+			System.out.println("3amor3");
+			FileInputStream fis3 = new FileInputStream(new File("./Boat.xml"));
+			XMLDecoder decoder3 = new XMLDecoder(fis3);
+			boat = (List<ICrosser>) decoder3.readObject();
+			setBoatRiders(boat);
+			decoder3.close();
+			fis3.close();
+			
+			System.out.println("3amor4");
+			FileInputStream fis4 = new FileInputStream(new File("./Sales.xml"));
+			XMLDecoder decoder4 = new XMLDecoder(fis4);
+		     numberOfSails= (int) decoder4.readObject();
+			setNumberOfSails(numberOfSails);
+			decoder4.close();
+			fis4.close();
+			
+			controller1 = new Controller1();
+			System.out.println("HERE? "+leftBankCrossers);
+			try{controller1.Sort();}
+			catch(Exception e ) {
+				System.out.println("ABU ALI");
+			}
+			
 		} catch (IOException ex2) {
 		}
 		;
 
-		try {
-			FileInputStream fis3 = new FileInputStream(new File("./Boat.xml"));
-			XMLDecoder decoder3 = new XMLDecoder(fis3);
-			boatRiders = (List<ICrosser>) decoder3.readObject();
-			setBoatRiders(boatRiders);
-			decoder3.close();
-			fis3.close();
-		} catch (IOException ex2) {
-		}
-		;
+//		try {
+//			FileInputStream fis2 = new FileInputStream(new File("./Saveright.xml"));
+//			XMLDecoder decoder2 = new XMLDecoder(fis2);
+//			rightBankCrossers = (List<ICrosser>) decoder2.readObject();
+//			setRightBankCrossers(rightBankCrossers);
+//			decoder2.close();
+//			fis2.close();
+//		} catch (IOException ex2) {
+//		}
+//		;
+//
+//		try {
+//			FileInputStream fis3 = new FileInputStream(new File("./Boat.xml"));
+//			XMLDecoder decoder3 = new XMLDecoder(fis3);
+//			boatRiders = (List<ICrosser>) decoder3.readObject();
+//			setBoatRiders(boatRiders);
+//			decoder3.close();
+//			fis3.close();
+//		} catch (IOException ex2) {
+//		}
+//		;
+//		
+//		
+//		try {
+//			FileInputStream fis4 = new FileInputStream(new File("./Sales.xml"));
+//			XMLDecoder decoder4 = new XMLDecoder(fis4);
+//			numberOfSails = (int) decoder4.readObject();
+//			setNumberOfSails(numberOfSails);
+//			//setBoatRiders(boatRiders);
+//			decoder4.close();
+//			fis4.close();
+//		} catch (IOException ex2) {
+//		}
+//		;
+		
+		
+	//	controller1.Loadinitialize();
 
 	}
 

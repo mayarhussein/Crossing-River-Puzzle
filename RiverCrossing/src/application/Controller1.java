@@ -3,15 +3,20 @@ package application;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 import javafx.animation.*;
 import javafx.animation.TranslateTransition;
@@ -54,12 +59,19 @@ public class Controller1 implements Initializable {
 	private Button save;
 	@FXML
 	private ImageView cabbage;
+	@FXML Button esc;
+	@FXML Button sort;
 
 	Story1 story = new Story1();
 	MVC1 controller = new MVC1();
 	private Herbivorous herbivorous = new Herbivorous();
 	private Carnivorous carnivorous = new Carnivorous();
 	private Plants plant = new Plants();
+	
+	private  List<ICrosser> Right = new ArrayList<>();
+	public List<ICrosser> Left = new ArrayList<>();
+	public List<ICrosser> Boat = new ArrayList<>();
+
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -85,7 +97,192 @@ public class Controller1 implements Initializable {
 			GoPlant();
 		});
 	}
+	
+	
+	
+	public void Loadinitialize() {
 
+		System.out.println("hena");
+		controller.getBoatRiders();
+		controller.getCrossersOnRightBank();
+		controller.getCrossersOnLeftBank();
+		System.out.println("hena2");
+	      Sort();
+	}
+	
+	
+			
+
+	
+	public void Sort() {
+		System.out.println("Recieved: "+controller.getCrossersOnLeftBank());
+		
+		for(int i=0 ; i<controller.getCrossersOnLeftBank().size() ;i++) {
+			
+		if(controller.getCrossersOnLeftBank().get(i) instanceof Herbivorous) {
+			
+			TranslateTransition transition3 = new TranslateTransition();
+			transition3.setDuration(Duration.seconds(0.1));
+			transition3.setNode(sheep);
+			transition3.setToX(-210);
+			
+			transition3.play();
+			
+		}
+		
+		
+		
+		if(controller.getCrossersOnLeftBank().get(i) instanceof Carnivorous) {
+				
+			System.out.println("ASDF");
+			TranslateTransition transition3 = new TranslateTransition();			
+			transition3.setDuration(Duration.seconds(0.1));
+			transition3.setNode(lion);
+			transition3.setToX(-210);
+			
+			
+			
+			transition3.play();
+			
+		}
+		
+		
+		
+		
+		if(controller.getCrossersOnLeftBank().get(i) instanceof Plants) {
+						
+			TranslateTransition transition3 = new TranslateTransition();
+			transition3.setDuration(Duration.seconds(0.1));
+			transition3.setNode(cabbage);
+			transition3.setToX(-210);
+			
+			
+			
+			transition3.play();
+			
+		}
+		
+		
+		if(controller.getNumberOfSails() %2== 1) {
+			
+			TranslateTransition transition3 = new TranslateTransition();
+			transition3.setDuration(Duration.seconds(0.1));
+			transition3.setNode(boat);
+			transition3.setToX(-200);
+			
+			TranslateTransition transition4 = new TranslateTransition();
+			transition4.setDuration(Duration.seconds(0.1));
+			transition4.setNode(farmer);
+			transition4.setToX(-200);
+			
+			transition4.play();
+			transition3.play();
+			
+		
+			
+		
+		}
+		
+
+//		if (controller.getBoatRiders().get(i) instanceof Herbivorous) {
+//			
+//			TranslateTransition transition3 = new TranslateTransition();
+//			transition3.setDuration(Duration.seconds(0.1));
+//			transition3.setNode(sheep);
+//			transition3.setToX(-200);
+//			transition3.play();
+//			
+//		}
+		
+		
+
+//		if (controller.getBoatRiders().contains(carnivorous)) {
+//			TranslateTransition transition8 = new TranslateTransition();
+//			// transition2.setDelay(Duration.seconds(3));
+//			transition8.setDuration(Duration.seconds(3));
+//			transition8.setNode(lion);
+//			transition8.setToX(-200);
+//			transition8.play();
+//
+//		}
+//
+//		if (controller.getBoatRiders().contains(plant)) {
+//			TranslateTransition transition7 = new TranslateTransition();
+//			// transition2.setDelay(Duration.seconds(3));
+//			transition7.setDuration(Duration.seconds(3));
+//			transition7.setNode(cabbage);
+//			transition7.setToX(-200);
+//			transition7.play();
+//
+//		}
+//		if (controller.getBoatRiders().get(i) instanceof Herbivorous) {
+//			TranslateTransition transition9 = new TranslateTransition();
+//			// transition2.setDelay(Duration.seconds(3));
+//			transition9.setDuration(Duration.seconds(3));
+//			transition9.setNode(sheep);
+//			transition9.setToX(-200);
+//			transition9.play();
+//
+//		}
+		
+		}
+		
+		
+		}
+		
+//		 else {
+//			   System.out.println("11");
+//		   }
+		
+		 
+//   if(controller.getCrossersOnLeftBank().contains(carnivorous)) {
+//			
+//			TranslateTransition transition3 = new TranslateTransition();
+//			// transition2.setDelay(Duration.seconds(3));
+//			transition3.setDuration(Duration.seconds(1));
+//			transition3.setNode(lion);
+//			transition3.setToX(-200);
+//			transition3.play();
+//			
+//		}
+//   else {
+//	   System.out.println("22");
+//   }
+//   
+//   
+//   
+//   if(controller.getCrossersOnLeftBank().contains(plant)) {
+//		
+//		TranslateTransition transition3 = new TranslateTransition();
+//		// transition2.setDelay(Duration.seconds(3));
+//		transition3.setDuration(Duration.seconds(1));
+//		transition3.setNode(cabbage);
+//		transition3.setToX(-200);
+//		transition3.play();
+//		
+//	}
+//   
+//   else {
+//	   System.out.println("33");
+//   }
+//   
+
+//    if(controller.getNumberOfSails()%2==1) {
+//	      
+//    	TranslateTransition transition = new TranslateTransition();
+//		transition.setDuration(Duration.seconds(1));
+//		transition.setNode(boat);
+//		transition.setToX(-200);
+//    	transition.play();
+//         }
+	
+    
+    
+		
+	
+	
+	
+	
 	// GO BUTTON
 
 	public void Go(ActionEvent event) {
@@ -454,4 +651,16 @@ public class Controller1 implements Initializable {
 		}
 
 	}
+	
+	
+	
+	
+	public void esc(ActionEvent event) throws IOException {
+	
+			Stage stage2 = (Stage) ((Node) event.getSource()).getScene().getWindow();
+			AnchorPane root = (AnchorPane) FXMLLoader.load(getClass().getResource("GUI.fxml"));
+			Scene scene = new Scene(root, 700, 600);
+			stage2.setScene(scene);
+			stage2.show();
+		}
 }

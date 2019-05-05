@@ -29,7 +29,7 @@
       <Button layoutX="504.0" layoutY="24.0" lineSpacing="2.0" mnemonicParsing="false" text="Reset" textFill="#d71414" />
       <Button layoutX="398.0" layoutY="24.0" mnemonicParsing="false" text="Undo" textFill="#c31717" />
       <Button layoutX="318.0" layoutY="24.0" mnemonicParsing="false" text="Redo" textFill="#d70f0f" />
-      <Button layoutX="62.0" layoutY="18.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="75.0" style="-fx-background-radius: 200;" text="Esc" textFill="#e41818" />
+      <Button fx:id="esc" layoutX="62.0" layoutY="18.0" mnemonicParsing="false" onAction="#esc" prefHeight="37.0" prefWidth="75.0" style="-fx-background-radius: 200;" text="Esc" textFill="#e41818" />
       <Button fx:id="save" layoutX="151.0" layoutY="18.0" mnemonicParsing="false" onAction="#SaveGame" prefHeight="37.0" prefWidth="75.0" style="-fx-background-radius: 200;" text="Save Game" textFill="#d31515" />
       <Button fx:id="go" layoutX="130.0" layoutY="118.0" mnemonicParsing="false" onAction="#Go" prefHeight="61.0" prefWidth="83.0" style="-fx-background-color: 556B25; -fx-background-radius: 200;" text="Go!" textFill="#2d9418">
          <font>
@@ -66,5 +66,6 @@
             <Font size="37.0" />
          </font>
       </Label>
+      <Button fx:id="sort" layoutX="314.0" layoutY="130.0" mnemonicParsing="false" onAction="#Sort" text="Button" />
    </children>
 </AnchorPane>

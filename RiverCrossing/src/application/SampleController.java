@@ -27,6 +27,8 @@ public class SampleController implements Initializable {
 	@FXML
 	private Button btn1;
 	@FXML
+	private Button btn2;
+	@FXML
 	private ComboBox<String> lvlChoice1;
 
 	@Override
@@ -58,14 +60,45 @@ public class SampleController implements Initializable {
 		}
 
 	}
+	
+	
+	
+//	public void actionBtn2(ActionEvent event) throws IOException {
+//		if (lvlChoice.getValue().equals("Story 1")) {
+//			Stage stage2 = (Stage) ((Node) event.getSource()).getScene().getWindow();
+//			AnchorPane root = (AnchorPane) FXMLLoader.load(getClass().getResource("Story1.fxml"));
+//			Scene scene = new Scene(root, 700, 600);
+//			stage2.setScene(scene);
+//			stage2.show();
+//		}
+//
+//		else if (lvlChoice.getValue().equals("Story 2")) {
+//
+//			Stage stage2 = (Stage) ((Node) event.getSource()).getScene().getWindow();
+//			AnchorPane root = (AnchorPane) FXMLLoader.load(getClass().getResource("Story2.fxml"));
+//			Scene scene = new Scene(root, 700, 600);
+//			stage2.setScene(scene);
+//			stage2.show();
+//
+//		}
+//
+//	}
+
+	
 
 	public void exitGame()  {
 		 Stage stage = (Stage) exitBtn.getScene().getWindow();
 		 stage.close();
 	 }
+	
 
 	public void actionBtn2(ActionEvent event) throws IOException {
 		if (lvlChoice1.getValue().equals("Story 1")) {
+			Stage stage2 = (Stage) ((Node) event.getSource()).getScene().getWindow();
+			AnchorPane root = (AnchorPane) FXMLLoader.load(getClass().getResource("Story1.fxml"));
+			Scene scene = new Scene(root, 700, 600);
+			stage2.setScene(scene);
+			stage2.show();
 			controller.loadGame();
 		}
 
