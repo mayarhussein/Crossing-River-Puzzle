@@ -8,30 +8,38 @@ public class Story1 implements ICrossingStrategy {
 	private Farmer farmer = new Farmer();
 	private Herbivorous herbivorous = Herbivorous.getHerbivorous();
 	private Carnivorous carnivorous = Carnivorous.getCarnivorous();
-	private Plants plant = new Plants();
+	private Plants plant = Plants.getPlants();
+
+	private static Story1 story1 = null;
+
+	private Story1() {
+	}
+
+	public static Story1 getStory1() {
+		if (story1 == null)
+			return story1 = new Story1();
+		else
+			return story1;
+	}
 
 	@Override
 	public boolean isValid(List<ICrosser> rightBankCrossers, List<ICrosser> leftBankCrossers,
 			List<ICrosser> boatRiders) {
 
-		if ((leftBankCrossers.contains(carnivorous)) && (leftBankCrossers.contains(herbivorous))) // &&
-																									// (!leftBankCrossers.contains(plant))
-																									// )
+		if ((leftBankCrossers.contains(carnivorous)) && (leftBankCrossers.contains(herbivorous))
+				&& (!leftBankCrossers.contains(plant))) // )
 			return false;
 
-		// else if((leftBankCrossers.contains(plant)) &&
-		// (leftBankCrossers.contains(herbivorous)) &&
-		// (!leftBankCrossers.contains(carnivorous)))
-		// return false;
+		else if ((leftBankCrossers.contains(plant)) && (leftBankCrossers.contains(herbivorous))
+				&& (!leftBankCrossers.contains(carnivorous)))
+			return false;
 
-		// else if((rightBankCrossers.contains(carnivorous)) &&
-		// (rightBankCrossers.contains(herbivorous)))// &&
-		// (!rightBankCrossers.contains(plant)) )
-		// return false;
-		// else if ((rightBankCrossers.contains(plant)) &&
-		// (rightBankCrossers.contains(herbivorous)) &&
-		// (!rightBankCrossers.contains(carnivorous)))
-//			return false;
+		else if ((rightBankCrossers.contains(carnivorous) && (rightBankCrossers.contains(herbivorous)))
+				&& (!rightBankCrossers.contains(plant)))
+			return false;
+		else if ((rightBankCrossers.contains(plant)) && (rightBankCrossers.contains(herbivorous))
+				&& (!rightBankCrossers.contains(carnivorous)))
+			return false;
 		else
 			return true;
 
@@ -63,10 +71,14 @@ public class Story1 implements ICrossingStrategy {
 		return instructions;
 
 	}
-
-	public static Story1 getStory1() {
-		// TODO Auto-generated method stub
-		return null;
+	
+	public boolean gameCompleted (List<ICrosser> leftBankCrossers)
+	{
+		if (leftBankCrossers.contains(carnivorous) && leftBankCrossers.contains(herbivorous) && leftBankCrossers.contains(plant))
+			return true ;
+		else 
+			return false;
+			
 	}
 
 }

@@ -29,8 +29,9 @@ public class Story2 implements ICrossingStrategy {
 	 * Carnivorous();
 	 */
 
-	private Herbivorous animal = Herbivorous.getHerbivorous();
+	private Herbivorous herbivorous = Herbivorous.getHerbivorous();
 	// private Herbivorous goat = new Herbivorous();
+	
 
 	public void setFarmers() {
 
@@ -76,7 +77,7 @@ public class Story2 implements ICrossingStrategy {
 		List<ICrosser> initialCrossers = new ArrayList<>();
 
 		initialCrossers.addAll(farmers);
-		initialCrossers.add(animal);
+		initialCrossers.add(herbivorous);
 
 		return initialCrossers;
 	}
@@ -120,11 +121,12 @@ public class Story2 implements ICrossingStrategy {
 	}
 
 	public Herbivorous getAnimal() {
-		return animal;
+		return herbivorous;
 	}
 
 	public void setAnimal(Herbivorous animal) {
-		this.animal = animal;
+		System.out.println(animal);
+		this.herbivorous = animal;
 	}
 
 	public Farmer getFarmer4() {
@@ -133,6 +135,13 @@ public class Story2 implements ICrossingStrategy {
 
 	public void setFarmer4(Farmer farmer4) {
 		this.farmer4 = farmer4;
+	}
+	
+	public boolean gameCompleted (List<ICrosser> leftBankCrossers) {
+		if (leftBankCrossers.containsAll(farmers) && leftBankCrossers.contains(herbivorous))
+			return true;
+		else 
+			return false;
 	}
 
 }

@@ -4,31 +4,31 @@ import java.util.List;
 
 public interface IControlStory1 {
 
-	public void moveSheep();
+	/*public void moveSheep();
 	
 	public void moveLion();
 
-	public void movePlant();
+	public void movePlant();*/
 
-	//public void move(ICrosser crosser);
+	public void move(ICrosser crosser);
 
-	public boolean IsSheepOnBoat();
+	public boolean IsOnBoat(ICrosser crosser);
 
-	public boolean IsLionOnBoat();
+	//public boolean IsLionOnBoat();
 
 	public void AddCharacterToBank(ICrosser crosser);
 
-	public int getPlantMoves();
+	/*public int getPlantMoves();
 
 	public void setPlantMoves(int plantMoves);
 
 	public int getLionMoves();
 
 	public void setLionMoves(int lionMoves);
+*/
+	public int getMoves(ICrosser crosser);
 
-	public int getSheepMoves();
-
-	public void setSheepMoves(int sheepMoves);
+	public void setMoves(int moves, ICrosser crosser);
 
 	// private Stack<Command> undo = new Stack<>();
 	public ICrossingStrategy getStory();

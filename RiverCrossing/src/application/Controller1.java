@@ -5,12 +5,16 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.Stack;
+
+import com.sun.org.apache.bcel.internal.generic.ISUB;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
@@ -18,6 +22,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import sun.net.www.content.text.plain;
 import javafx.animation.*;
 import javafx.animation.TranslateTransition;
 import javafx.event.ActionEvent;
@@ -59,19 +64,34 @@ public class Controller1 implements Initializable {
 	private Button save;
 	@FXML
 	private ImageView cabbage;
-	@FXML Button esc;
-	@FXML Button sort;
+	@FXML
+	private Button esc;
+	@FXML
+	private Button sort;
+	@FXML
+	private Button undo;
+	@FXML
+	private Button reset;
 
-	Story1 story = new Story1();
+	Story1 story = Story1.getStory1();
 	MVC1 controller = new MVC1();
-	private Herbivorous herbivorous = new Herbivorous();
-	private Carnivorous carnivorous = new Carnivorous();
-	private Plants plant = new Plants();
-	
-	private  List<ICrosser> Right = new ArrayList<>();
+	private Herbivorous herbivorous = Herbivorous.getHerbivorous();
+	private Carnivorous carnivorous = Carnivorous.getCarnivorous();
+	private Plants plant = Plants.getPlants();
+
+	private List<ICrosser> Right = new ArrayList<>();
 	public List<ICrosser> Left = new ArrayList<>();
 	public List<ICrosser> Boat = new ArrayList<>();
 
+	private Originator originator;
+	private CareTaker careTaker = new CareTaker();
+	private Memento memento;
+	private int step = -1;
+
+	/*
+	 * static Stack<String> undoStack1 = new Stack<>(); static Stack<String>
+	 * redoStack1 = new Stack<>();
+	 */
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -97,92 +117,70 @@ public class Controller1 implements Initializable {
 			GoPlant();
 		});
 	}
-	
-	
-	
+
 	public void Loadinitialize() {
 
-		System.out.println("hena");
 		controller.getBoatRiders();
 		controller.getCrossersOnRightBank();
 		controller.getCrossersOnLeftBank();
-		System.out.println("hena2");
-	      Sort();
+		Sort();
 	}
-	
-	
-			
 
-	
 	public void Sort() {
-		System.out.println("Recieved: "+controller.getCrossersOnLeftBank());
-		
-		for(int i=0 ; i<controller.getCrossersOnLeftBank().size() ;i++) {
-			
-		if(controller.getCrossersOnLeftBank().get(i) instanceof Herbivorous) {
-			
-			TranslateTransition transition3 = new TranslateTransition();
-			transition3.setDuration(Duration.seconds(0.1));
-			transition3.setNode(sheep);
-			transition3.setToX(-210);
-			
-			transition3.play();
-			
-		}
-		
-		
-		
-		if(controller.getCrossersOnLeftBank().get(i) instanceof Carnivorous) {
-				
-			System.out.println("ASDF");
-			TranslateTransition transition3 = new TranslateTransition();			
-			transition3.setDuration(Duration.seconds(0.1));
-			transition3.setNode(lion);
-			transition3.setToX(-210);
-			
-			
-			
-			transition3.play();
-			
-		}
-		
-		
-		
-		
-		if(controller.getCrossersOnLeftBank().get(i) instanceof Plants) {
-						
-			TranslateTransition transition3 = new TranslateTransition();
-			transition3.setDuration(Duration.seconds(0.1));
-			transition3.setNode(cabbage);
-			transition3.setToX(-210);
-			
-			
-			
-			transition3.play();
-			
-		}
-		
-		
-		if(controller.getNumberOfSails() %2== 1) {
-			
-			TranslateTransition transition3 = new TranslateTransition();
-			transition3.setDuration(Duration.seconds(0.1));
-			transition3.setNode(boat);
-			transition3.setToX(-200);
-			
-			TranslateTransition transition4 = new TranslateTransition();
-			transition4.setDuration(Duration.seconds(0.1));
-			transition4.setNode(farmer);
-			transition4.setToX(-200);
-			
-			transition4.play();
-			transition3.play();
-			
-		
-			
-		
-		}
-		
+		System.out.println("Recieved: " + controller.getCrossersOnLeftBank());
+
+		for (int i = 0; i < controller.getCrossersOnLeftBank().size(); i++) {
+
+			if (controller.getCrossersOnLeftBank().get(i) instanceof Herbivorous) {
+
+				TranslateTransition transition3 = new TranslateTransition();
+				transition3.setDuration(Duration.seconds(0.1));
+				transition3.setNode(sheep);
+				transition3.setToX(-210);
+
+				transition3.play();
+
+			}
+
+			if (controller.getCrossersOnLeftBank().get(i) instanceof Carnivorous) {
+
+				System.out.println("ASDF");
+				TranslateTransition transition3 = new TranslateTransition();
+				transition3.setDuration(Duration.seconds(0.1));
+				transition3.setNode(lion);
+				transition3.setToX(-210);
+
+				transition3.play();
+
+			}
+
+			if (controller.getCrossersOnLeftBank().get(i) instanceof Plants) {
+
+				TranslateTransition transition3 = new TranslateTransition();
+				transition3.setDuration(Duration.seconds(0.1));
+				transition3.setNode(cabbage);
+				transition3.setToX(-210);
+
+				transition3.play();
+
+			}
+
+			if (controller.getNumberOfSails() % 2 == 1) {
+
+				TranslateTransition transition3 = new TranslateTransition();
+				transition3.setDuration(Duration.seconds(0.1));
+				transition3.setNode(boat);
+				transition3.setToX(-200);
+
+				TranslateTransition transition4 = new TranslateTransition();
+				transition4.setDuration(Duration.seconds(0.1));
+				transition4.setNode(farmer);
+				transition4.setToX(-200);
+
+				transition4.play();
+				transition3.play();
+
+			}
 
 //		if (controller.getBoatRiders().get(i) instanceof Herbivorous) {
 //			
@@ -193,8 +191,6 @@ public class Controller1 implements Initializable {
 //			transition3.play();
 //			
 //		}
-		
-		
 
 //		if (controller.getBoatRiders().contains(carnivorous)) {
 //			TranslateTransition transition8 = new TranslateTransition();
@@ -224,17 +220,15 @@ public class Controller1 implements Initializable {
 //			transition9.play();
 //
 //		}
-		
+
 		}
-		
-		
-		}
-		
+
+	}
+
 //		 else {
 //			   System.out.println("11");
 //		   }
-		
-		 
+
 //   if(controller.getCrossersOnLeftBank().contains(carnivorous)) {
 //			
 //			TranslateTransition transition3 = new TranslateTransition();
@@ -275,133 +269,127 @@ public class Controller1 implements Initializable {
 //		transition.setToX(-200);
 //    	transition.play();
 //         }
-	
-    
-    
-		
-	
-	
-	
-	
+
 	// GO BUTTON
 
-	public void Go(ActionEvent event) {
+	public void Go() {
 
 		/**
 		 * RotateTransition transition1=new
 		 * RotateTransition(Duration.seconds(3),farmer); transition1.setFromAngle(0);
 		 * transition1.setToAngle(360);
 		 */
-		// if ((controller.getCrossersOnLeftBank().contains(herbivorous))
-		// && (controller.getCrossersOnLeftBank().contains(carnivorous)))
-		/*
-		 * if (story.isValid(controller.getCrossersOnRightBank(),
-		 * controller.getCrossersOnLeftBank(), controller.getBoatRiders()))
-		 */// {
 
-		// if (controller.canMove(controller.getCrossersOnRightBank(), true))
-		// GameOverWdw.setVisible(true);
-		// } else {
+		if (story.isValid(controller.getCrossersOnRightBank(), controller.getCrossersOnLeftBank(),
+				controller.getBoatRiders())) {
+			if (controller.isBoatOnTheLeftBank()) {
+				controller.doMove(null, false);
+				TranslateTransition transition = new TranslateTransition();
+				// transition.setDelay(Duration.seconds(3));
+				transition.setDuration(Duration.seconds(3));
+				transition.setNode(boat);
+				transition.setToX(50);
+				TranslateTransition transition1 = new TranslateTransition();
+				// transition1.setDelay(Duration.seconds(3));
+				transition1.setDuration(Duration.seconds(3));
+				transition1.setNode(farmer);
+				transition1.setToX(50);
 
-		if (controller.isBoatOnTheLeftBank()) {
-			controller.doMove(null, false);
-			TranslateTransition transition = new TranslateTransition();
-			// transition.setDelay(Duration.seconds(3));
-			transition.setDuration(Duration.seconds(3));
-			transition.setNode(boat);
-			transition.setToX(50);
-			TranslateTransition transition1 = new TranslateTransition();
-			// transition1.setDelay(Duration.seconds(3));
-			transition1.setDuration(Duration.seconds(3));
-			transition1.setNode(farmer);
-			transition1.setToX(50);
+				if (controller.getBoatRiders().contains(herbivorous)) {
+					TranslateTransition transition3 = new TranslateTransition();
+					// transition2.setDelay(Duration.seconds(3));
+					transition3.setDuration(Duration.seconds(3));
+					transition3.setNode(sheep);
+					transition3.setToX(50);
+					transition3.play();
 
-			if (controller.getBoatRiders().contains(herbivorous)) {
-				TranslateTransition transition3 = new TranslateTransition();
+				}
+
+				if (controller.getBoatRiders().contains(carnivorous)) {
+					TranslateTransition transition3 = new TranslateTransition();
+					// transition2.setDelay(Duration.seconds(3));
+					transition3.setDuration(Duration.seconds(3));
+					transition3.setNode(lion);
+					transition3.setToX(50);
+					transition3.play();
+
+				}
+
+				transition1.play();
+				transition.play();
+
+				if (controller.getBoatRiders().contains(plant)) {
+					TranslateTransition transition3 = new TranslateTransition();
+					// transition2.setDelay(Duration.seconds(3));
+					transition3.setDuration(Duration.seconds(3));
+					transition3.setNode(cabbage);
+					transition3.setToX(50);
+					transition3.play();
+
+				}
+
+				transition1.play();
+				transition.play();
+
+			} else {
+				controller.doMove(null, false);
+				TranslateTransition transition = new TranslateTransition();
+				// transition.setDelay(Duration.seconds(3));
+				transition.setDuration(Duration.seconds(3));
+				transition.setNode(boat);
+				transition.setToX(-200);
+				TranslateTransition transition2 = new TranslateTransition();
 				// transition2.setDelay(Duration.seconds(3));
-				transition3.setDuration(Duration.seconds(3));
-				transition3.setNode(sheep);
-				transition3.setToX(50);
-				transition3.play();
+				transition2.setDuration(Duration.seconds(3));
+				transition2.setNode(farmer);
+				transition2.setToX(-200);
+				transition.play();
+				transition2.play();
+
+				if (controller.getBoatRiders().contains(herbivorous)) {
+					TranslateTransition transition3 = new TranslateTransition();
+					// transition2.setDelay(Duration.seconds(3));
+					transition3.setDuration(Duration.seconds(3));
+					transition3.setNode(sheep);
+					transition3.setToX(-200);
+					transition3.play();
+
+				}
+
+				if (controller.getBoatRiders().contains(carnivorous)) {
+					TranslateTransition transition3 = new TranslateTransition();
+					// transition2.setDelay(Duration.seconds(3));
+					transition3.setDuration(Duration.seconds(3));
+					transition3.setNode(lion);
+					transition3.setToX(-200);
+					transition3.play();
+
+				}
+
+				if (controller.getBoatRiders().contains(plant)) {
+					TranslateTransition transition3 = new TranslateTransition();
+					// transition2.setDelay(Duration.seconds(3));
+					transition3.setDuration(Duration.seconds(3));
+					transition3.setNode(cabbage);
+					transition3.setToX(-200);
+					transition3.play();
+
+				}
 
 			}
 
-			if (controller.getBoatRiders().contains(carnivorous)) {
-				TranslateTransition transition3 = new TranslateTransition();
-				// transition2.setDelay(Duration.seconds(3));
-				transition3.setDuration(Duration.seconds(3));
-				transition3.setNode(lion);
-				transition3.setToX(50);
-				transition3.play();
+			score.setText(Integer.toString(controller.getNumberOfSails()));
 
-			}
+			// ControlStory1.undoStack.push("boat");
 
-			transition1.play();
-			transition.play();
-
-			if (controller.getBoatRiders().contains(plant)) {
-				TranslateTransition transition3 = new TranslateTransition();
-				// transition2.setDelay(Duration.seconds(3));
-				transition3.setDuration(Duration.seconds(3));
-				transition3.setNode(cabbage);
-				transition3.setToX(50);
-				transition3.play();
-
-			}
-
-			transition1.play();
-			transition.play();
-
-		} else {
-			controller.doMove(null, false);
-			TranslateTransition transition = new TranslateTransition();
-			// transition.setDelay(Duration.seconds(3));
-			transition.setDuration(Duration.seconds(3));
-			transition.setNode(boat);
-			transition.setToX(-200);
-			TranslateTransition transition2 = new TranslateTransition();
-			// transition2.setDelay(Duration.seconds(3));
-			transition2.setDuration(Duration.seconds(3));
-			transition2.setNode(farmer);
-			transition2.setToX(-200);
-			transition.play();
-			transition2.play();
-
-			if (controller.getBoatRiders().contains(herbivorous)) {
-				TranslateTransition transition3 = new TranslateTransition();
-				// transition2.setDelay(Duration.seconds(3));
-				transition3.setDuration(Duration.seconds(3));
-				transition3.setNode(sheep);
-				transition3.setToX(-200);
-				transition3.play();
-
-			}
-
-			if (controller.getBoatRiders().contains(carnivorous)) {
-				TranslateTransition transition3 = new TranslateTransition();
-				// transition2.setDelay(Duration.seconds(3));
-				transition3.setDuration(Duration.seconds(3));
-				transition3.setNode(lion);
-				transition3.setToX(-200);
-				transition3.play();
-
-			}
-
-			if (controller.getBoatRiders().contains(plant)) {
-				TranslateTransition transition3 = new TranslateTransition();
-				// transition2.setDelay(Duration.seconds(3));
-				transition3.setDuration(Duration.seconds(3));
-				transition3.setNode(cabbage);
-				transition3.setToX(-200);
-				transition3.play();
-
-			}
-
+			originator = new Originator(controller.getCrossersOnRightBank(), controller.getCrossersOnLeftBank(),
+					controller.getBoatRiders());
+			careTaker.addMemento(originator.storeInMemento());
+			step++;
 		}
-
-		score.setText(Integer.toString(controller.getNumberOfSails()));
-		// transition1.play();
-
+		/*
+		 * } else Alert.displayAlert("Invalid Move", "Warning");
+		 */
 	}
 
 	public boolean Disable(Button b) {
@@ -427,7 +415,7 @@ public class Controller1 implements Initializable {
 
 		else {
 
-			if (controller.IsSheepOnBoat()) {
+			if (controller.IsOnBoat(herbivorous)) {
 				controller.RemoveBoatRiders(herbivorous);
 				controller.AddCharacterToBank(herbivorous);
 
@@ -477,8 +465,17 @@ public class Controller1 implements Initializable {
 				controller.getCrossersOnRightBank().remove(herbivorous);
 			}
 
-			controller.moveSheep();
-
+			controller.move(herbivorous);
+			// controller.doMove(controller.getBoatRiders(), true);
+			/*
+			 * if (story.gameCompleted(controller.getCrossersOnLeftBank()))
+			 * Alert.displayAlert("Game Completed", "\tYAY\t!");
+			 */
+			// ControlStory1.undoStack.push("sheep");
+			originator = new Originator(controller.getCrossersOnRightBank(), controller.getCrossersOnLeftBank(),
+					controller.getBoatRiders());
+			careTaker.addMemento(originator.storeInMemento());
+			step++;
 		}
 
 	}
@@ -501,7 +498,7 @@ public class Controller1 implements Initializable {
 
 		else {
 
-			if (controller.IsLionOnBoat()) {
+			if (controller.IsOnBoat(carnivorous)) {
 				controller.RemoveBoatRiders(carnivorous);
 				controller.AddCharacterToBank(carnivorous);
 
@@ -551,7 +548,18 @@ public class Controller1 implements Initializable {
 				controller.getCrossersOnRightBank().remove(carnivorous);
 			}
 
-			controller.moveLion();
+			controller.move(carnivorous);
+			// controller.doMove(controller.getBoatRiders(), true);
+			/*
+			 * if (story.gameCompleted(controller.getCrossersOnLeftBank()))
+			 * Alert.displayAlert("Game Completed", "\tYAY!\t");
+			 */
+
+			// ControlStory1.undoStack.push("lion");
+			originator = new Originator(controller.getCrossersOnRightBank(), controller.getCrossersOnLeftBank(),
+					controller.getBoatRiders());
+			careTaker.addMemento(originator.storeInMemento());
+			step++;
 
 		}
 
@@ -597,7 +605,7 @@ public class Controller1 implements Initializable {
 
 		else {
 
-			if (controller.IsPlantOnBoat()) {
+			if (controller.IsOnBoat(plant)) {
 				controller.RemoveBoatRiders(plant);
 				controller.AddCharacterToBank(plant);
 
@@ -646,21 +654,161 @@ public class Controller1 implements Initializable {
 				controller.getCrossersOnRightBank().remove(plant);
 			}
 
-			controller.movePlant();
+			controller.move(plant);
+			// controller.doMove(controller.getBoatRiders(), true);
+			/*
+			 * if (story.gameCompleted(controller.getCrossersOnLeftBank()))
+			 * Alert.displayAlert("Game Completed", "\tYAY!\t");
+			 */
+
+			// ControlStory1.undoStack.push("plant");
+
+			originator = new Originator(controller.getCrossersOnRightBank(), controller.getCrossersOnLeftBank(),
+					controller.getBoatRiders());
+			careTaker.addMemento(originator.storeInMemento());
+			
+			step++;
 
 		}
 
 	}
-	
-	
-	
-	
-	public void esc(ActionEvent event) throws IOException {
-	
-			Stage stage2 = (Stage) ((Node) event.getSource()).getScene().getWindow();
-			AnchorPane root = (AnchorPane) FXMLLoader.load(getClass().getResource("GUI.fxml"));
-			Scene scene = new Scene(root, 700, 600);
-			stage2.setScene(scene);
-			stage2.show();
+
+	public void undo(ActionEvent event) {
+		memento = careTaker.getMemento(step);
+		System.out.println(memento.getBoatRiders());
+		System.out.println(memento.getLeftBankCrossers());
+		System.out.println(memento.getRightBankCrossers());
+		
+		
+		step--;
+		if (memento != null) {
+			originator.restoreFromMemento(memento);
+
+		for (int i = 0; i < memento.getLeftBankCrossers().size(); i++) {
+			if (memento.getLeftBankCrossers().get(i) instanceof Herbivorous) {
+				//controller.decreaseMoves("sheep");
+				controller.setLeftBankCrossers(memento.getLeftBankCrossers());
+				GoSheep();
+				if (controller.isBoatOnTheLeftBank())
+					Go();
+				break;
+			}
+			if (memento.getLeftBankCrossers().get(i) instanceof Carnivorous) {
+				controller.setRightBankCrossers(memento.getRightBankCrossers());
+				//controller.decreaseMoves("lion");
+				GoLion();
+				if (controller.isBoatOnTheLeftBank())
+					Go();
+				break;
+			}
+			if (memento.getLeftBankCrossers().get(i) instanceof Plants) {
+				//controller.decreaseMoves("plant");
+				controller.setBoatRiders(memento.getBoatRiders());
+				GoPlant();
+				if (controller.isBoatOnTheLeftBank())
+					Go();
+				break;
+			}
+		//	controller.decreaseMoves("boat");
+			
+
 		}
+
+		for (int i = 0; i < memento.getRightBankCrossers().size(); i++) {
+			if (memento.getRightBankCrossers().get(i) instanceof Herbivorous) {
+				controller.setLeftBankCrossers(memento.getLeftBankCrossers());
+				//controller.decreaseMoves("sheep");
+				GoSheep();
+			}
+			if (memento.getRightBankCrossers().get(i) instanceof Carnivorous) {
+				controller.setRightBankCrossers(memento.getRightBankCrossers());
+				//controller.decreaseMoves("lion");
+				GoLion();
+			}
+			if (memento.getRightBankCrossers().get(i) instanceof Plants) {
+				controller.setBoatRiders(memento.getBoatRiders());
+				//controller.decreaseMoves("plant");
+				GoPlant();
+			}
+		//	controller.decreaseMoves("boat");
+		//	Go();
+
+		}
+
+		for (int i = 0; i <memento.getBoatRiders().size(); i++) {
+			if (memento.getBoatRiders().get(i) instanceof Herbivorous) {
+				controller.setLeftBankCrossers(memento.getLeftBankCrossers());
+				//controller.decreaseMoves("sheep");
+				GoSheep();
+			}
+			if (memento.getBoatRiders().get(i) instanceof Carnivorous) {
+				controller.setRightBankCrossers(memento.getRightBankCrossers());
+				//controller.decreaseMoves("lion");
+				GoLion();
+			}
+			if (memento.getBoatRiders().get(i) instanceof Plants) {
+				controller.setBoatRiders(memento.getBoatRiders());
+				//controller.decreaseMoves("plant");
+				GoPlant();
+			}
+			
+			//controller.decreaseMoves("boat");
+			Go();
+
+		}
+		}
+		/*
+		 * if (undoStack1.peek().equals("sheep")) {
+		 * 
+		 * GoSheep(); redoStack1.push(undoStack1.pop());
+		 * controller.decreaseMoves("sheep");
+		 * 
+		 * }
+		 * 
+		 * if (undoStack1.peek().equals("lion")) {
+		 * 
+		 * GoLion(); redoStack1.push(undoStack1.pop());
+		 * controller.decreaseMoves("lion");
+		 * 
+		 * }
+		 * 
+		 * if (undoStack1.peek().equals("plant")) {
+		 * 
+		 * GoPlant(); redoStack1.push(undoStack1.pop());
+		 * controller.decreaseMoves("plant");
+		 * 
+		 * }
+		 * 
+		 * if (undoStack1.peek().equals("boat")) {
+		 * 
+		 * Go(); redoStack1.push(undoStack1.pop()); controller.decreaseMoves("boat");
+		 * 
+		 * }
+		 */
+	}
+
+	public void redo() {
+
+	}
+
+	public void esc(ActionEvent event) throws IOException {
+
+		Stage stage2 = (Stage) ((Node) event.getSource()).getScene().getWindow();
+		AnchorPane root = (AnchorPane) FXMLLoader.load(getClass().getResource("GUI.fxml"));
+		Scene scene = new Scene(root, 700, 600);
+		stage2.setScene(scene);
+		stage2.show();
+	}
+
+	public void reset(ActionEvent event) throws IOException
+
+	{
+
+		Stage stage2 = (Stage) ((Node) event.getSource()).getScene().getWindow();
+		AnchorPane root = (AnchorPane) FXMLLoader.load(getClass().getResource("Story1.fxml"));
+		Scene scene = new Scene(root, 700, 600);
+		stage2.setScene(scene);
+		stage2.show();
+
+	}
 }

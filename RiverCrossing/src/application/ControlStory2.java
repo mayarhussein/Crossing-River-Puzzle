@@ -18,13 +18,21 @@ public class ControlStory2 implements IRiverCrossingController, IControlStory2 {
 	}
 
 	private Herbivorous herbivorous = Herbivorous.getHerbivorous();
-	private Carnivorous carnivorous = Carnivorous.getCarnivorous();
+	// private Carnivorous carnivorous = Carnivorous.getCarnivorous();
+
+	public Herbivorous getHerbivorous() {
+		return herbivorous;
+	}
+
+	public void setHerbivorous(Herbivorous herbivorous) {
+		this.herbivorous = herbivorous;
+	}
 
 	private Story2 s2 = Story2.getStory2();
 
 	public static Stack<IButtonCommand> commandStack = new Stack<>();
 
-	private int cF1 = 1, cF2 = 1, cF3 = 1, cF4 = 1, cHerb;
+	private int cF1 = 1, cF2 = 1, cF3 = 1, cF4 = 1, cHerb = 1;
 	// private int moves = 1;
 
 	public int getcHerb() {
@@ -126,20 +134,9 @@ public class ControlStory2 implements IRiverCrossingController, IControlStory2 {
 		this.cF4 = cF4;
 	}
 
-	// public int getMoves(Farmer f) {
-	// return moves;
-	// }
-
-	// public void setMoves(int moves) {
-	// this.moves = moves;
-	// }
 	private List<ICrosser> rightBankCrossers = new ArrayList<>();
 	private List<ICrosser> leftBankCrossers = new ArrayList<>();
 	private List<ICrosser> boatRiders = new ArrayList<>();
-
-	// private Farmer farmer = new Farmer();
-
-	private Plants plant = Plants.getPlants();
 
 	private int numberOfSails = 0, undoCount = 0, redoCount = 0;
 	private ICrossingStrategy story;
@@ -324,7 +321,7 @@ public class ControlStory2 implements IRiverCrossingController, IControlStory2 {
 
 	}
 
-	public boolean isOnBoat(ICrosser crosser)  {
+	public boolean isOnBoat(ICrosser crosser) {
 		if (crosser.equals(s2.getFarmer1())) {
 			if (getcF1() % 2 == 0)
 				return true;
@@ -338,12 +335,18 @@ public class ControlStory2 implements IRiverCrossingController, IControlStory2 {
 		} else if (crosser.equals(s2.getFarmer4())) {
 			if (getcF4() % 2 == 0)
 				return true;
-		} else if (crosser.equals(s2.getAnimal())) {
-			if (getcHerb() % 2 == 0)
-				return true;
 		}
 		return false;
 
+	}
+
+	public boolean isSheepOnBoat(Herbivorous herbivorous) {
+
+		if (herbivorous.equals(s2.getAnimal()))
+			if (getcHerb() % 2 == 0)
+				return true;
+
+		return false;
 	}
 
 	public void AddCharacterToBank(ICrosser crosser) {
@@ -389,8 +392,68 @@ public class ControlStory2 implements IRiverCrossingController, IControlStory2 {
 	@Override
 	public void setMoves(int moves) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	
+	
+	public void decreaseMoves(String obj) {
+		int x ;
+	
+		if (obj.equals("boat")) {
+		x = getNumberOfSails();
+		x--;
+		System.out.println(x);
+		setNumberOfSails(x);
+		for (int i = 0 ; i< getBoatRiders().size() ; i++) {
+			if (getBoatRiders().contains(s2.getFarmer1())) {
+				setcF1(getcF1() -1);
+			}
+			if (getBoatRiders().contains(s2.getFarmer2())) {
+				setcF2(getcF2() -1);
+			}
+			if (getBoatRiders().contains(s2.getFarmer3())) {
+				setcF3(getcF3() -1);
+			}
+			if (getBoatRiders().contains(s2.getFarmer4())) {
+				setcF4(getcF4() -1);
+			}
+			if (getBoatRiders().contains(s2.getAnimal())) {
+				setcHerb(getcHerb()-1);
+			}
+		}
+		}
+
+		if (getcF1() > 0 && obj.equals("farmer1")) {
+
+			x = getcF1();
+			x--;
+			setcF1(x);
+		}
+
+		if (getcF2() > 0 && obj.equals("farmer2")) {
+
+			x = getcF2();
+			x--;
+			setcF2(x);
+		}
+		if (getcF3() > 0 && obj.equals("farmer3")) {
+
+			x = getcF3();
+			x--;
+			setcF3(x);
+		}
+		if (getcF4() > 0 && obj.equals("farmer4")) {
+
+			x = getcF4();
+			x--;
+			setcF4(x);
+		}
+		if (getcHerb() > 0 && obj.equals("farmer1")) {
+
+			x = getcHerb();
+			x--;
+			setcHerb(x);;
+		}
+	}
 }

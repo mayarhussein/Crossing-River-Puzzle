@@ -5,30 +5,9 @@ import java.util.List;
 
 public class MVC1 implements IRiverCrossingController, IControlStory1{
 	
-	Controller MVCController = Controller.getControl();
-	@Override
-	public void moveSheep() {
-	MVCController.moveSheep();
-		
-	}
-
-	@Override
-	public void moveLion() {
-		MVCController.moveLion();
-		
-	}
-
-	@Override
-	public boolean IsSheepOnBoat() {
-		return MVCController.IsSheepOnBoat();
-		
-	}
-
-	@Override
-	public boolean IsLionOnBoat() {
-		return MVCController.IsLionOnBoat();
-	}
-
+	ControlStory1 MVCController = ControlStory1.getControl();
+	ButtonCommand command = new ButtonCommand();
+	
 	@Override
 	public void AddCharacterToBank(ICrosser crosser) {
 	MVCController.AddCharacterToBank(crosser);
@@ -36,36 +15,14 @@ public class MVC1 implements IRiverCrossingController, IControlStory1{
 	}
 
 	@Override
-	public int getPlantMoves() {
-		return MVCController.getPlantMoves();
-	}
-
-	@Override
-	public void setPlantMoves(int plantMoves) {
-	MVCController.setPlantMoves(plantMoves);
-	}
-
-	@Override
-	public int getLionMoves() {
-		
-		return MVCController.getLionMoves();
-	}
-
-	@Override
-	public void setLionMoves(int lionMoves) {
-		MVCController.setLionMoves(lionMoves);
+	public int getMoves(ICrosser crosser) {
+		return MVCController.getMoves(crosser);
 		
 	}
 
 	@Override
-	public int getSheepMoves() {
-		return MVCController.getSheepMoves();
-		
-	}
-
-	@Override
-	public void setSheepMoves(int sheepMoves) {
-	MVCController.setSheepMoves(sheepMoves);
+	public void setMoves(int moves, ICrosser crosser) {
+	MVCController.setMoves(moves , crosser);
 		
 	}
 
@@ -204,7 +161,7 @@ public class MVC1 implements IRiverCrossingController, IControlStory1{
 
 	@Override
 	public void saveGame() throws IOException {
-	MVCController.saveGame();
+	command.saveGame();
 		
 	}
 
@@ -221,14 +178,24 @@ public class MVC1 implements IRiverCrossingController, IControlStory1{
 	}
 
 	@Override
-	public void movePlant() {
-		MVCController.movePlant();
+	public void move(ICrosser crosser) {
+		MVCController.move(crosser);
 		
 	}
 
-	public boolean IsPlantOnBoat() {
+	public boolean IsOnBoat(ICrosser crosser) {
 		
-		return MVCController.IsPlantOnBoat();
+		return MVCController.IsOnBoat(crosser);
+	}
+
+	public void decreaseMoves(String obj) {
+		 MVCController.decreaseMoves(obj);
+		
+	}
+
+	public void increaseMoves(String obj) {
+		 MVCController.increaseMoves(obj);
+		
 	}
 
 	/*@Override
