@@ -33,7 +33,7 @@ public class ControlStory2 implements IRiverCrossingController, IControlStory2 {
 	public static Stack<IButtonCommand> commandStack = new Stack<>();
 
 	private int cF1 = 1, cF2 = 1, cF3 = 1, cF4 = 1, cHerb = 1;
-	// private int moves = 1;
+	
 
 	public int getcHerb() {
 		return cHerb;

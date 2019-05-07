@@ -432,19 +432,14 @@ public class ControlStory1 implements IRiverCrossingController {
 	public void decreaseMoves(String obj) {
 		int x ;
 	
-		if (obj.equals("boat")) {
-		x = getNumberOfSails();
-		x--;
-		setNumberOfSails(x);
-		for (int i = 0 ; i<getBoatRiders().size() ; i++) {
-			if (getBoatRiders().contains(carnivorous))
-				setMoves(getMoves(carnivorous) -1, carnivorous);
-			if (getBoatRiders().contains(herbivorous))
-				setMoves(getMoves(herbivorous) -1, herbivorous);
-			if (getBoatRiders().contains(plant))
-				setMoves(getMoves(plant)-1, plant);
-		}
-		}
+		/*
+		 * if (obj.equals("boat")) { x = getNumberOfSails(); x--; setNumberOfSails(x);
+		 * for (int i = 0 ; i<getBoatRiders().size() ; i++) { if
+		 * (getBoatRiders().contains(carnivorous)) setMoves(getMoves(carnivorous) -1,
+		 * carnivorous); if (getBoatRiders().contains(herbivorous))
+		 * setMoves(getMoves(herbivorous) -1, herbivorous); if
+		 * (getBoatRiders().contains(plant)) setMoves(getMoves(plant)-1, plant); } }
+		 */
 
 		if (getMoves(herbivorous) > 0 && obj.equals("sheep")) {
 

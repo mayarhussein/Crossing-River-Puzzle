@@ -22,40 +22,25 @@ import javafx.animation.*;
 import javafx.event.ActionEvent;
 
 public class Controller2 implements Initializable {
-	@FXML
-	private ImageView boat;
-	@FXML
-	private Button help;
-	@FXML
-	private Label helpLb1;
-	@FXML
-	private Label helpLb2;
-	@FXML
-	private Label helpLb3;
-	@FXML
-	private Label helpLb4;
-	@FXML
-	private Label helpLb5;
-	@FXML
-	private AnchorPane helpWdw;
-	@FXML
-	private ImageView farmer1;
-	@FXML
-	private ImageView farmer2;
-	@FXML
-	private ImageView farmer3;
-	@FXML
-	private ImageView farmer4;
-	@FXML
-	private ImageView sheep1;
-	@FXML
-	private Button esc;
-	@FXML
-	private Button reset;
-	@FXML
-	private Button undo;
-	@FXML
-	private Label score;
+	@FXML private ImageView boat;
+	@FXML private Button help;
+	@FXML private Label helpLb1;
+	@FXML private Label helpLb2;
+	@FXML private Label helpLb3;
+	@FXML private Label helpLb4;
+	@FXML private Label helpLb5;
+	@FXML private AnchorPane helpWdw;
+	@FXML private ImageView farmer1;
+	@FXML private ImageView farmer2;
+	@FXML private ImageView farmer3;
+	@FXML private ImageView farmer4;
+	@FXML private ImageView sheep1;
+	@FXML private Button esc;
+	@FXML private Button reset;
+	@FXML private Button undo;
+	@FXML private Label score;
+	@FXML  private Button redo;
+	@FXML private Button save;
 
 	MVC2 controller2 = new MVC2();
 	Story2 story2 = Story2.getStory2();
@@ -169,7 +154,7 @@ public class Controller2 implements Initializable {
 					// transition2.setDelay(Duration.seconds(3));
 					transition3.setDuration(Duration.seconds(6));
 					transition3.setNode(farmer1);
-					transition3.setToX(-300);
+					transition3.setToX(-200);
 					transition3.play();
 				}
 
@@ -196,7 +181,7 @@ public class Controller2 implements Initializable {
 					// transition2.setDelay(Duration.seconds(3));
 					transition3.setDuration(Duration.seconds(6));
 					transition3.setNode(farmer4);
-					transition3.setToX(-200);
+					transition3.setToX(-300);
 					transition3.play();
 				}
 
@@ -212,9 +197,20 @@ public class Controller2 implements Initializable {
 				undoStack1.push("boat");
 
 			}
+			
+			score.setText(Integer.toString(controller2.getNumberOfSails()));
 		}
-/*		}else
-			Alert.displayAlert("Invalid Move", "Warning");*/
+		
+		else 
+			Alert1.displayAlert("Invalid Move","Warning"); 
+		
+		
+
+		if (story2.gameCompleted(controller2.getCrossersOnLeftBank()))
+			Alert1.displayAlert("Game Completed", "\tYAY!\t");
+		
+		
+		
 	}
 
 	public void GoFarmer1() {
@@ -252,8 +248,8 @@ public class Controller2 implements Initializable {
 					transition.setDelay(Duration.seconds(3));
 					transition.setDuration(Duration.seconds(1));
 					transition.setNode(farmer1);
-					transition.setToX(-70);
-					transition.setToY(70);
+					//transition.setToX(-70);
+					transition.setToY(50);
 
 					transition1.play();
 					transition.play();
@@ -281,26 +277,13 @@ public class Controller2 implements Initializable {
 			}
 
 		}
-	/*	if (story2.gameCompleted(controller2.getCrossersOnLeftBank()))
-			Alert.displayAlert("Game Completed", "\tYAY!\t");*/
+	
 
 		undoStack1.push("farmer1");
 	}
 
 	public void GoFarmer2() {
-		/**
-		 * controller2.AddBoatRiders(story2.getFarmer2()); RotateTransition transition1
-		 * = new RotateTransition(Duration.seconds(3), AnchorPane2);
-		 * transition1.setFromAngle(0); transition1.setToAngle(360); TranslateTransition
-		 * transition = new TranslateTransition();
-		 * transition.setDelay(Duration.seconds(3));
-		 * transition.setDuration(Duration.seconds(1)); transition.setNode(AnchorPane2);
-		 * transition.setToX(-70); transition.setToY(70);
-		 * 
-		 * transition1.play(); transition.play();
-		 * 
-		 * controller2.moveFarmer1();
-		 */
+		
 
 		if ((controller2.isBoatOnTheLeftBank()) && (controller2.getCrossersOnRightBank().contains(story2.getFarmer2())))
 			;
@@ -362,28 +345,13 @@ public class Controller2 implements Initializable {
 			}
 
 		}
-	/*	if (story2.gameCompleted(controller2.getCrossersOnLeftBank()))
-			Alert.displayAlert("Game Completed", "\tYAY!\t");*/
+	
 		undoStack1.push("farmer2");
 
 	}
 
 	public void GoFarmer3() {
-		// controller2.AddBoatRiders(story2.getFarmer3());
-		// RotateTransition transition1 = new RotateTransition(Duration.seconds(3),
-		// AnchorPane3);
-		// transition1.setFromAngle(0);
-		// transition1.setToAngle(360);
-		// TranslateTransition transition = new TranslateTransition();
-		// transition.setDelay(Duration.seconds(3));
-		// transition.setDuration(Duration.seconds(1));
-		// transition.setNode(AnchorPane3);
-		// transition.setToY(20);
-
-		// transition1.play();
-		// transition.play();
-
-		// controller2.moveFarmer(story2.getFarmer3());
+		
 
 		if ((controller2.isBoatOnTheLeftBank()) && (controller2.getCrossersOnRightBank().contains(story2.getFarmer3())))
 			;
@@ -418,7 +386,7 @@ public class Controller2 implements Initializable {
 					transition.setDuration(Duration.seconds(1));
 					transition.setNode(farmer3);
 					// transition.setToX(-70);
-					transition.setToY(20);
+					transition.setToY(50);
 
 					transition1.play();
 					transition.play();
@@ -446,27 +414,13 @@ public class Controller2 implements Initializable {
 			}
 
 		}
-	/*	if (story2.gameCompleted(controller2.getCrossersOnLeftBank()))
-			Alert.displayAlert("Game Completed", "\tYAY!\t");*/
+	
 		undoStack1.push("farmer3");
 
 	}
 
 	public void GoFarmer4() {
 
-		/**
-		 * controller2.AddBoatRiders(story2.getFarmer4()); RotateTransition transition1
-		 * = new RotateTransition(Duration.seconds(3), AnchorPane4);
-		 * transition1.setFromAngle(0); transition1.setToAngle(360); TranslateTransition
-		 * transition = new TranslateTransition();
-		 * transition.setDelay(Duration.seconds(3));
-		 * transition.setDuration(Duration.seconds(1)); transition.setNode(AnchorPane4);
-		 * transition.setToY(50);
-		 * 
-		 * transition1.play(); transition.play();
-		 * 
-		 * // controller2.moveFarmer(story2.getFarmer4());
-		 */
 		if ((controller2.isBoatOnTheLeftBank())
 				&& (controller2.getCrossersOnRightBank().contains(story2.getFarmer4())));
 
@@ -499,8 +453,8 @@ public class Controller2 implements Initializable {
 					transition.setDelay(Duration.seconds(3));
 					transition.setDuration(Duration.seconds(1));
 					transition.setNode(farmer4);
-					// transition.setToX(-70);
-					transition.setToY(20);
+					 transition.setToX(-50);
+					transition.setToY(50);
 
 					transition1.play();
 					transition.play();
@@ -528,27 +482,14 @@ public class Controller2 implements Initializable {
 			}
 
 		}
-	/*	if (story2.gameCompleted(controller2.getCrossersOnLeftBank()))
-			Alert.displayAlert("Game Completed", "\tYAY!\t");*/
+	
 		undoStack1.push("farmer4");
 
 	}
 
 	public void GoSheep() {
 
-		/**
-		 * controller2.AddBoatRiders(story2.getFarmer4()); RotateTransition transition1
-		 * = new RotateTransition(Duration.seconds(3), AnchorPane4);
-		 * transition1.setFromAngle(0); transition1.setToAngle(360); TranslateTransition
-		 * transition = new TranslateTransition();
-		 * transition.setDelay(Duration.seconds(3));
-		 * transition.setDuration(Duration.seconds(1)); transition.setNode(AnchorPane4);
-		 * transition.setToY(50);
-		 * 
-		 * transition1.play(); transition.play();
-		 * 
-		 * // controller2.moveFarmer(story2.getFarmer4());
-		 */
+		
 		if ((controller2.isBoatOnTheLeftBank())
 				&& (controller2.getCrossersOnRightBank().contains(story2.getAnimal()))) ;
 		else if ((!controller2.isBoatOnTheLeftBank())
@@ -580,7 +521,7 @@ public class Controller2 implements Initializable {
 					transition.setDelay(Duration.seconds(3));
 					transition.setDuration(Duration.seconds(1));
 					transition.setNode(sheep1);
-					// transition.setToX(-70);
+					transition.setToX(-20);
 					transition.setToY(20);
 
 					transition1.play();
@@ -609,9 +550,8 @@ public class Controller2 implements Initializable {
 			}
 
 		}
-		/*if (story2.gameCompleted(controller2.getCrossersOnLeftBank()))
-			Alert.displayAlert("Game Completed", "\tYAY!\t");
-*/
+	
+
 		undoStack1.push("sheep");
 
 	}
@@ -663,7 +603,7 @@ public class Controller2 implements Initializable {
 		if (undoStack1.peek().equals("farmer1")) {
 
 			GoFarmer1();
-			redoStack1.push(undoStack1.pop());
+		
 			controller2.decreaseMoves("farmer1");
 
 		}
@@ -671,7 +611,7 @@ public class Controller2 implements Initializable {
 		if (undoStack1.peek().equals("farmer2")) {
 
 			GoFarmer2();
-			redoStack1.push(undoStack1.pop());
+		
 			controller2.decreaseMoves("farmer2");
 
 		}
@@ -679,7 +619,7 @@ public class Controller2 implements Initializable {
 		if (undoStack1.peek().equals("farmer3")) {
 
 			GoFarmer3();
-			redoStack1.push(undoStack1.pop());
+			
 			controller2.decreaseMoves("farmer3");
 
 		}
@@ -687,7 +627,7 @@ public class Controller2 implements Initializable {
 		if (undoStack1.peek().equals("farmer4")) {
 			
 			GoFarmer4();
-			redoStack1.push(undoStack1.pop());
+			
 			controller2.decreaseMoves("farmer4");
 
 		}
@@ -695,7 +635,7 @@ public class Controller2 implements Initializable {
 		if (undoStack1.peek().equals("sheep")) {
 			
 			GoSheep();
-			redoStack1.push(undoStack1.pop());
+			
 			controller2.decreaseMoves("sheep");
 
 		}
@@ -703,12 +643,71 @@ public class Controller2 implements Initializable {
 		if (undoStack1.peek().equals("boat")) {
 			
 			Go();
-			redoStack1.push(undoStack1.pop());
+			
 			controller2.decreaseMoves("boat");
 
 		}
-
+		
+		String str =undoStack1.pop();
+		redoStack1.push(str);
 	}
+	
+
+	public void redo(ActionEvent event) {
+
+		if (undoStack1.peek().equals("farmer1")) {
+
+			GoFarmer1();
+		
+		
+
+		}
+
+		if (undoStack1.peek().equals("farmer2")) {
+
+			GoFarmer2();
+		
+			
+
+		}
+
+		if (undoStack1.peek().equals("farmer3")) {
+
+			GoFarmer3();
+			
+			
+
+		}
+
+		if (undoStack1.peek().equals("farmer4")) {
+			
+			GoFarmer4();
+			
+
+		}
+
+		if (undoStack1.peek().equals("sheep")) {
+			
+			GoSheep();
+			
+			
+
+		}
+
+		if (undoStack1.peek().equals("boat")) {
+			
+			Go();
+			
+			
+
+		}
+		
+		//String str =undoStack1.pop();
+		//redoStack1.push(str);
+	}
+	
+	
+	
 	
 	public boolean Disable(Button b) {
 		b.setDisable(true);
@@ -716,4 +715,7 @@ public class Controller2 implements Initializable {
 
 	}
 
+	
+	
+	
 }

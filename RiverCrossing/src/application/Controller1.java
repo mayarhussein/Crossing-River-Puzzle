@@ -28,50 +28,28 @@ import javafx.animation.TranslateTransition;
 import javafx.event.ActionEvent;
 
 public class Controller1 implements Initializable {
-	@FXML
-	private ImageView boat;
-	@FXML
-	private Button help;
-	@FXML
-	private ImageView farmer;
-	@FXML
-	private Label helpLb1;
-	@FXML
-	private Label helpLb2;
-	@FXML
-	private Label helpLb3;
-	@FXML
-	private Label helpLb4;
-	@FXML
-	private Label helpLb5;
-	@FXML
-	private AnchorPane helpWdw;
-	@FXML
-	private Button okay;
-	@FXML
-	private Button SheepB;
-	@FXML
-	private ImageView sheep;
-	@FXML
-	private ImageView lion;
-	@FXML
-	private Button LionB;
-	@FXML
-	private Label score;
-	@FXML
-	private AnchorPane GameOverWdw;
-	@FXML
-	private Button save;
-	@FXML
-	private ImageView cabbage;
-	@FXML
-	private Button esc;
-	@FXML
-	private Button sort;
-	@FXML
-	private Button undo;
-	@FXML
-	private Button reset;
+	@FXML private ImageView boat;
+	@FXML private Button help;
+	@FXML private ImageView farmer;
+	@FXML private Label helpLb1;
+	@FXML private Label helpLb2;
+	@FXML private Label helpLb3;
+	@FXML private Label helpLb4;
+	@FXML private Label helpLb5;
+	@FXML private AnchorPane helpWdw;
+	@FXML private Button okay;
+	@FXML private Button SheepB;
+	@FXML private ImageView sheep;
+	@FXML private ImageView lion;
+	@FXML private Button LionB;
+	@FXML private Label score;
+	@FXML private AnchorPane GameOverWdw;
+	@FXML private Button save;
+	@FXML private ImageView cabbage;
+	@FXML private Button esc;
+	@FXML private Button sort;
+	@FXML private Button undo;
+	@FXML private Button reset;
 
 	Story1 story = Story1.getStory1();
 	MVC1 controller = new MVC1();
@@ -87,11 +65,9 @@ public class Controller1 implements Initializable {
 	private CareTaker careTaker = new CareTaker();
 	private Memento memento;
 	private int step = -1;
-
-	/*
-	 * static Stack<String> undoStack1 = new Stack<>(); static Stack<String>
-	 * redoStack1 = new Stack<>();
-	 */
+	static Stack <String> undoStack1= new Stack<>();
+	static Stack <String> redoStack1= new Stack<>();
+	
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -101,6 +77,7 @@ public class Controller1 implements Initializable {
 		controller.getCrossersOnRightBank().add(herbivorous);
 		controller.getCrossersOnRightBank().add(carnivorous);
 		controller.getCrossersOnRightBank().add(plant);
+		
 
 		sheep.setOnMouseClicked(e -> {
 			GoSheep();
@@ -387,9 +364,19 @@ public class Controller1 implements Initializable {
 			careTaker.addMemento(originator.storeInMemento());
 			step++;
 		}
-		/*
-		 * } else Alert.displayAlert("Invalid Move", "Warning");
-		 */
+		
+		else 
+			Alert1.displayAlert("Invalid Move","Warning"); 
+		
+		
+
+		 if((controller.getCrossersOnLeftBank().contains(herbivorous)) && (controller.getCrossersOnLeftBank().contains(carnivorous)) && (controller.getCrossersOnLeftBank().contains(plant)))
+		
+		Alert1.displayAlert("Whoaa! YOU PASSED LEVEL ONE !","River Crossing"); 
+		
+			
+		
+		
 	}
 
 	public boolean Disable(Button b) {
@@ -402,11 +389,12 @@ public class Controller1 implements Initializable {
 	public void GoSheep() {
 
 		if ((controller.isBoatOnTheLeftBank()) && (controller.getCrossersOnRightBank().contains(herbivorous))) {
-
+		
 		}
 
+		
 		else if ((!controller.isBoatOnTheLeftBank()) && (controller.getCrossersOnLeftBank().contains(herbivorous))) {
-
+			
 		}
 
 		else if (controller.getBoatRiders().contains(carnivorous) || controller.getBoatRiders().contains(plant)) {
@@ -466,16 +454,18 @@ public class Controller1 implements Initializable {
 			}
 
 			controller.move(herbivorous);
+			undoStack1.push("sheep");
 			// controller.doMove(controller.getBoatRiders(), true);
 			/*
 			 * if (story.gameCompleted(controller.getCrossersOnLeftBank()))
 			 * Alert.displayAlert("Game Completed", "\tYAY\t!");
 			 */
 			// ControlStory1.undoStack.push("sheep");
-			originator = new Originator(controller.getCrossersOnRightBank(), controller.getCrossersOnLeftBank(),
-					controller.getBoatRiders());
-			careTaker.addMemento(originator.storeInMemento());
-			step++;
+			/*
+			 * originator = new Originator(controller.getCrossersOnRightBank(),
+			 * controller.getCrossersOnLeftBank(), controller.getBoatRiders());
+			 * careTaker.addMemento(originator.storeInMemento()); step++;
+			 */
 		}
 
 	}
@@ -556,12 +546,15 @@ public class Controller1 implements Initializable {
 			 */
 
 			// ControlStory1.undoStack.push("lion");
-			originator = new Originator(controller.getCrossersOnRightBank(), controller.getCrossersOnLeftBank(),
-					controller.getBoatRiders());
-			careTaker.addMemento(originator.storeInMemento());
-			step++;
+			/*
+			 * originator = new Originator(controller.getCrossersOnRightBank(),
+			 * controller.getCrossersOnLeftBank(), controller.getBoatRiders());
+			 * careTaker.addMemento(originator.storeInMemento()); step++;
+			 */
+			undoStack1.push("lion");
 
 		}
+		
 
 	}
 
@@ -655,6 +648,8 @@ public class Controller1 implements Initializable {
 			}
 
 			controller.move(plant);
+			undoStack1.push("plant");
+
 			// controller.doMove(controller.getBoatRiders(), true);
 			/*
 			 * if (story.gameCompleted(controller.getCrossersOnLeftBank()))
@@ -662,134 +657,153 @@ public class Controller1 implements Initializable {
 			 */
 
 			// ControlStory1.undoStack.push("plant");
-
-			originator = new Originator(controller.getCrossersOnRightBank(), controller.getCrossersOnLeftBank(),
-					controller.getBoatRiders());
-			careTaker.addMemento(originator.storeInMemento());
+			/*
+			 * originator = new Originator(controller.getCrossersOnRightBank(),
+			 * controller.getCrossersOnLeftBank(), controller.getBoatRiders());
+			 * careTaker.addMemento(originator.storeInMemento());
+			 * 
+			 * step++;
+			 */
 			
-			step++;
-
 		}
 
 	}
 
-	public void undo(ActionEvent event) {
-		memento = careTaker.getMemento(step);
-		System.out.println(memento.getBoatRiders());
-		System.out.println(memento.getLeftBankCrossers());
-		System.out.println(memento.getRightBankCrossers());
-		
-		
-		step--;
-		if (memento != null) {
-			originator.restoreFromMemento(memento);
-
-		for (int i = 0; i < memento.getLeftBankCrossers().size(); i++) {
-			if (memento.getLeftBankCrossers().get(i) instanceof Herbivorous) {
-				//controller.decreaseMoves("sheep");
-				controller.setLeftBankCrossers(memento.getLeftBankCrossers());
-				GoSheep();
-				if (controller.isBoatOnTheLeftBank())
-					Go();
-				break;
-			}
-			if (memento.getLeftBankCrossers().get(i) instanceof Carnivorous) {
-				controller.setRightBankCrossers(memento.getRightBankCrossers());
-				//controller.decreaseMoves("lion");
-				GoLion();
-				if (controller.isBoatOnTheLeftBank())
-					Go();
-				break;
-			}
-			if (memento.getLeftBankCrossers().get(i) instanceof Plants) {
-				//controller.decreaseMoves("plant");
-				controller.setBoatRiders(memento.getBoatRiders());
-				GoPlant();
-				if (controller.isBoatOnTheLeftBank())
-					Go();
-				break;
-			}
-		//	controller.decreaseMoves("boat");
+	/*
+	 * public void undo(ActionEvent event) { memento = careTaker.getMemento(step);
+	 * System.out.println(memento.getBoatRiders());
+	 * System.out.println(memento.getLeftBankCrossers());
+	 * System.out.println(memento.getRightBankCrossers());
+	 * 
+	 * 
+	 * step--; if (memento != null) { originator.restoreFromMemento(memento);
+	 * 
+	 * for (int i = 0; i < memento.getLeftBankCrossers().size(); i++) { if
+	 * (memento.getLeftBankCrossers().get(i) instanceof Herbivorous) {
+	 * //controller.decreaseMoves("sheep");
+	 * controller.setLeftBankCrossers(memento.getLeftBankCrossers()); GoSheep(); if
+	 * (controller.isBoatOnTheLeftBank()) Go(); break; } if
+	 * (memento.getLeftBankCrossers().get(i) instanceof Carnivorous) {
+	 * controller.setRightBankCrossers(memento.getRightBankCrossers());
+	 * //controller.decreaseMoves("lion"); GoLion(); if
+	 * (controller.isBoatOnTheLeftBank()) Go(); break; } if
+	 * (memento.getLeftBankCrossers().get(i) instanceof Plants) {
+	 * //controller.decreaseMoves("plant");
+	 * controller.setBoatRiders(memento.getBoatRiders()); GoPlant(); if
+	 * (controller.isBoatOnTheLeftBank()) Go(); break; } //
+	 * controller.decreaseMoves("boat");
+	 * 
+	 * 
+	 * }
+	 * 
+	 * for (int i = 0; i < memento.getRightBankCrossers().size(); i++) { if
+	 * (memento.getRightBankCrossers().get(i) instanceof Herbivorous) {
+	 * controller.setLeftBankCrossers(memento.getLeftBankCrossers());
+	 * //controller.decreaseMoves("sheep"); GoSheep(); } if
+	 * (memento.getRightBankCrossers().get(i) instanceof Carnivorous) {
+	 * controller.setRightBankCrossers(memento.getRightBankCrossers());
+	 * //controller.decreaseMoves("lion"); GoLion(); } if
+	 * (memento.getRightBankCrossers().get(i) instanceof Plants) {
+	 * controller.setBoatRiders(memento.getBoatRiders());
+	 * //controller.decreaseMoves("plant"); GoPlant(); } //
+	 * controller.decreaseMoves("boat"); // Go();
+	 * 
+	 * }
+	 * 
+	 * for (int i = 0; i <memento.getBoatRiders().size(); i++) { if
+	 * (memento.getBoatRiders().get(i) instanceof Herbivorous) {
+	 * controller.setLeftBankCrossers(memento.getLeftBankCrossers());
+	 * //controller.decreaseMoves("sheep"); GoSheep(); } if
+	 * (memento.getBoatRiders().get(i) instanceof Carnivorous) {
+	 * controller.setRightBankCrossers(memento.getRightBankCrossers());
+	 * //controller.decreaseMoves("lion"); GoLion(); } if
+	 * (memento.getBoatRiders().get(i) instanceof Plants) {
+	 * controller.setBoatRiders(memento.getBoatRiders());
+	 * //controller.decreaseMoves("plant"); GoPlant(); }
+	 * 
+	 * //controller.decreaseMoves("boat"); Go();
+	 * 
+	 * }
+	 */
+		//}
+		public void undo(ActionEvent event)
+		{
+		if(undoStack1.peek().equals("sheep")) {
 			
+				
+			GoSheep();
+			controller.decreaseMoves("sheep");
+			
+		}
+		
+		if(undoStack1.peek().equals("lion")) {
+			//redoStack1.push(undoStack1.pop());
+			GoLion();
+			controller.decreaseMoves("lion");
+			
+			
+		}
+		
+	if(undoStack1.peek().equals("plant")) {
+		//redoStack1.push(undoStack1.pop());
+			GoPlant();
+			controller.decreaseMoves("plant");
+			
+			
+		}
+
+
+		
+		
+	
+	String str =undoStack1.pop();
+	redoStack1.push(str);
 
 		}
 
-		for (int i = 0; i < memento.getRightBankCrossers().size(); i++) {
-			if (memento.getRightBankCrossers().get(i) instanceof Herbivorous) {
-				controller.setLeftBankCrossers(memento.getLeftBankCrossers());
-				//controller.decreaseMoves("sheep");
-				GoSheep();
-			}
-			if (memento.getRightBankCrossers().get(i) instanceof Carnivorous) {
-				controller.setRightBankCrossers(memento.getRightBankCrossers());
-				//controller.decreaseMoves("lion");
-				GoLion();
-			}
-			if (memento.getRightBankCrossers().get(i) instanceof Plants) {
-				controller.setBoatRiders(memento.getBoatRiders());
-				//controller.decreaseMoves("plant");
-				GoPlant();
-			}
-		//	controller.decreaseMoves("boat");
-		//	Go();
 
-		}
-
-		for (int i = 0; i <memento.getBoatRiders().size(); i++) {
-			if (memento.getBoatRiders().get(i) instanceof Herbivorous) {
-				controller.setLeftBankCrossers(memento.getLeftBankCrossers());
-				//controller.decreaseMoves("sheep");
+		public void redo() {
+			
+			if(redoStack1.peek().equals("sheep")) {
+				System.out.println(redoStack1.peek());
+					
 				GoSheep();
-			}
-			if (memento.getBoatRiders().get(i) instanceof Carnivorous) {
-				controller.setRightBankCrossers(memento.getRightBankCrossers());
-				//controller.decreaseMoves("lion");
-				GoLion();
-			}
-			if (memento.getBoatRiders().get(i) instanceof Plants) {
-				controller.setBoatRiders(memento.getBoatRiders());
-				//controller.decreaseMoves("plant");
-				GoPlant();
+				
+				
+				
 			}
 			
-			//controller.decreaseMoves("boat");
+			if(redoStack1.peek().equals("lion")) {
+				
+				GoLion();
+				
+				
+				
+			}
+			
+		if(redoStack1.peek().equals("plant")) {
+			
+				GoPlant();
+				
+				
+				
+			}
+
+
+		if(redoStack1.peek().equals("boat")) {
+			
 			Go();
-
+			
+			
 		}
+
+			
+			
+			
+			
 		}
-		/*
-		 * if (undoStack1.peek().equals("sheep")) {
-		 * 
-		 * GoSheep(); redoStack1.push(undoStack1.pop());
-		 * controller.decreaseMoves("sheep");
-		 * 
-		 * }
-		 * 
-		 * if (undoStack1.peek().equals("lion")) {
-		 * 
-		 * GoLion(); redoStack1.push(undoStack1.pop());
-		 * controller.decreaseMoves("lion");
-		 * 
-		 * }
-		 * 
-		 * if (undoStack1.peek().equals("plant")) {
-		 * 
-		 * GoPlant(); redoStack1.push(undoStack1.pop());
-		 * controller.decreaseMoves("plant");
-		 * 
-		 * }
-		 * 
-		 * if (undoStack1.peek().equals("boat")) {
-		 * 
-		 * Go(); redoStack1.push(undoStack1.pop()); controller.decreaseMoves("boat");
-		 * 
-		 * }
-		 */
-	}
 
-	public void redo() {
-
-	}
+	
 
 	public void esc(ActionEvent event) throws IOException {
 

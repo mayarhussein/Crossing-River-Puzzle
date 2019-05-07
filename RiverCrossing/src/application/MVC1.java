@@ -198,6 +198,8 @@ public class MVC1 implements IRiverCrossingController, IControlStory1{
 		
 	}
 
+	
+
 	/*@Override
 	public void move(ICrosser crosser) {
 		// TODO Auto-generated method stub
