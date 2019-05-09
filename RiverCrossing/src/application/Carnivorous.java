@@ -8,8 +8,7 @@ import java.awt.image.BufferedImage;
 public class Carnivorous extends Animals{
 
  private static Carnivorous carnivorous = null;
-	
-	private Carnivorous() {
+	public Carnivorous() {
 
 	}
 

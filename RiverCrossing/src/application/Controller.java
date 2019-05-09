@@ -228,7 +228,7 @@ public class Controller implements IRiverCrossingController {
 		if (canUndo()) {
 			numberOfSails--;
 			undoCount++;
-			ButtonCommand currentCommand = new ButtonCommand(undoStack.pop());
+		//	ButtonCommand currentCommand = new ButtonCommand(undoStack.pop());
 			redoStack.push(currentCommand);
 		}
 
@@ -237,7 +237,7 @@ public class Controller implements IRiverCrossingController {
 	@Override
 	public void redo() {
 		if (canRedo()) {
-			ButtonCommand currentCommand = new ButtonCommand(redoStack.pop());
+		//	ButtonCommand currentCommand = new ButtonCommand(redoStack.pop());
 			undoStack.push(currentCommand);
 			undoCount--;
 			redoCount++;

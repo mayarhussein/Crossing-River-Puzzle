@@ -6,7 +6,7 @@ public class Plants implements ICrosser {
 
 private static Plants plants= null;
 	
-	private Plants(){
+	public Plants(){
 	}
 
 	public static Plants getPlants() {

@@ -7,7 +7,7 @@ import java.awt.image.BufferedImage;
 public class Herbivorous extends Animals {
 	private static Herbivorous herbivorous = null;
 	
-	private Herbivorous(){
+	public Herbivorous(){
 	}
 
 	public static Herbivorous getHerbivorous() {
