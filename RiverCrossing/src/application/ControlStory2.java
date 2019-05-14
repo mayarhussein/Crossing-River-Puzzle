@@ -335,18 +335,12 @@ public class ControlStory2 implements IRiverCrossingController, IControlStory2 {
 		} else if (crosser.equals(s2.getFarmer4())) {
 			if (getcF4() % 2 == 0)
 				return true;
-		}
+		} else if (crosser.equals(s2.getAnimal())) {
+				if (getcHerb() % 2 == 0)
+					return true;
+			}
 		return false;
 
-	}
-
-	public boolean isSheepOnBoat(Herbivorous herbivorous) {
-
-		if (herbivorous.equals(s2.getAnimal()))
-			if (getcHerb() % 2 == 0)
-				return true;
-
-		return false;
 	}
 
 	public void AddCharacterToBank(ICrosser crosser) {
@@ -358,28 +352,8 @@ public class ControlStory2 implements IRiverCrossingController, IControlStory2 {
 	}
 
 	public void removeBoat(ICrosser crosser) {
-		if (crosser.equals(s2.getFarmer1())) {
-
-			RemoveBoatRiders(crosser);
-			AddCharacterToBank(crosser);
-
-		} else if (crosser.equals(s2.getFarmer2())) {
-
-			RemoveBoatRiders(crosser);
-			AddCharacterToBank(crosser);
-		} else if (crosser.equals(s2.getFarmer3())) {
-
-			RemoveBoatRiders(crosser);
-			AddCharacterToBank(crosser);
-		} else if (crosser.equals(s2.getFarmer4())) {
-
-			RemoveBoatRiders(crosser);
-			AddCharacterToBank(crosser);
-		} else if (crosser.equals(s2.getAnimal())) {
-
-			RemoveBoatRiders(crosser);
-			AddCharacterToBank(crosser);
-		}
+		RemoveBoatRiders(crosser);
+		AddCharacterToBank(crosser);
 
 	}
 

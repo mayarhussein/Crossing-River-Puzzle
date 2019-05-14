@@ -33,11 +33,6 @@ public class MVC2 implements IRiverCrossingController , IControlStory2{
 		
 	}
 	
-	@Override
-	public boolean isSheepOnBoat(Herbivorous crosser) {
-		return MVCCommand.isSheepOnBoat(crosser);
-		
-	}
 
 	@Override
 	public boolean validateMove(ICrosser crosser) {
